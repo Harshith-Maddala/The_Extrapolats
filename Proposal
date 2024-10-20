@@ -1,4 +1,4 @@
-Proposal 
+Proposal :
 
 The online dating landscape has transformed significantly, with platforms like OKCupid providing a wealth of user data that can be analyzed to unfold trends in user preferences and behavior. By conducting a thorough exploratory data analysis (EDA) on the OKCupid profiles dataset, we aim to gain insights into the factors that influence user interactions and preferences in the dating space.
 
@@ -6,7 +6,7 @@ Understanding these dynamics is crucial for users and researchers alike, as it c
 
 We’ve sourced a comprehensive dataset from Kaggle that includes various features like demographics, profile descriptions, and user preferences. With thousands of profiles to analyze, we’ll conduct exploratory data analysis (EDA) to spot trends, identify correlations, and visualize our findings. Our aim is to provide meaningful insights that can benefit users and contribute to a deeper understanding of online dating behavior.
 
-SMART questions
+SMART questions :
 
 1. How accurately can we determine a person's sex based on their reported height?
 
