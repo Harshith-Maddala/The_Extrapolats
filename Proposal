@@ -1,23 +1,5 @@
 Proposal :
 
-Online dating, these days, has changed dramatically. Most strikingly, websites like OKCupid have captured an enormous amount of data on its users, which can then be used to unlock trends in what its users' tastes and behaviors are. An exploratory data analysis will be done on the dataset of the OKCupid profiles for gaining insight into driving factors that make the users interact and show preferences in the dating space.
-
-The dynamics of building the profile and going through the process are very important to understand, which will not only help the user but also provide extended chances of developing more alluring profiles and, hence, maximizing the dating experience. On the other hand, analysis could be cumbersome because many elements come into play, such as age, gender, interests, and location.
-
-We have downloaded a comprehensive dataset from Kaggle that included several features in the demographic, profile description, and user preference aspects. We have many thousands of profiles on which we will be carrying out EDA, observing the trends, looking for correlations, and visualizing these onto plots for clarity. Our aim is to provide meaningful insights that can benefit users and contribute to a deeper understanding of online dating behavior.
-
-
-Proposal 
-
-The online dating landscape has transformed significantly, with platforms like OKCupid providing a wealth of user data that can be analyzed to unfold trends in user preferences and behavior. By conducting a thorough exploratory data analysis (EDA) on the OKCupid profiles dataset, we aim to gain insights into the factors that influence user interactions and preferences in the dating space.
-
-Understanding these dynamics is crucial for users and researchers alike, as it can help individuals create more appealing profiles and enhance their overall dating experiences. However, the analysis is complex due to the multitude of factors at play, such as age, gender, interests, and location.
-
-We’ve sourced a comprehensive dataset from Kaggle that includes various features like demographics, profile descriptions, and user preferences. With thousands of profiles to analyze, we’ll conduct exploratory data analysis (EDA) to spot trends, identify correlations, and visualize our findings. Our aim is to provide meaningful insights that can benefit users and contribute to a deeper understanding of online dating behavior.
-
-
-Proposal :
-
 Online dating these dates has transformed significantly. Notably, dating platforms like OKCupid have captured an enormous amount of data on its users, which can then be used to unlock trends regarding users' tastes and behaviors. An exploratory data analysis will be done on the dataset of the OKCupid profiles to gain insights on the factors that influence user interactions and preferences in the dating space.
 
 Understanding the dynamics of these dating profiles is very important to users and researchers  alike, as it will not only help the user but also provides extended chances of developing more alluring profiles and maximize the dating experience. On the other hand, analysis could be complex because many elements come into play, such as age, gender, diet, interests, body type, education and loaction.
