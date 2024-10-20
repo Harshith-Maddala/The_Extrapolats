@@ -2,9 +2,10 @@ Proposal :
 
 Online dating these dates has transformed significantly. Notably, dating platforms like OKCupid have captured an enormous amount of data on its users, which can then be used to unlock trends regarding users' tastes and behaviors. An exploratory data analysis will be done on the dataset of the OKCupid profiles to gain insights on the factors that influence user interactions and preferences in the dating space.
 
-Understanding the dynamics of these dating profiles is very important to users and researchers  alike, as it will not only help the user but also provides extended chances of developing more alluring profiles and maximize the dating experience. On the other hand, analysis could be complex because many elements come into play, such as age, gender, diet, interests, body type, education and loaction.
+Understanding the dynamics of these dating profiles is very important to users and researchers alike, as it will not only help the user but also provides extended chances of developing more alluring profiles and maximize the dating experience. On the other hand, analysis could be complex because many elements come into play, such as age, gender, diet, interests, body type, education and location.
 
 We have sourced a comprehensive dataset from Kaggle that included several features in the demographic, profile description, and user preference aspects. We have approximately 60,000 profiles on which we will be carrying out EDA, observing the trends, looking for correlations, and visualizing these onto plots for clarity. Our aim is to provide meaningful insights that can benefit users and contribute to a deeper understanding of online dating behavior.
+
 
 
 SMART questions :
