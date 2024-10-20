@@ -4,7 +4,7 @@ Online dating, these days, has changed dramatically. Most strikingly, websites l
 
 The dynamics of building the profile and going through the process are very important to understand, which will not only help the user but also provide extended chances of developing more alluring profiles and, hence, maximizing the dating experience. On the other hand, analysis could be cumbersome because many elements come into play, such as age, gender, interests, and location.
 
-We have downloaded a comprehensive dataset from Kaggle that included several features in the demographic, profile description, and user preference aspects. We have many thousands of profiles on which we will be carrying out EDA, observing the trends, looking for correlations, and visualizing these onto plots for clarity. Our aim is to provide meaningful insights that can benefit users and contribute to a deeper understanding of online dating behavior
+We have downloaded a comprehensive dataset from Kaggle that included several features in the demographic, profile description, and user preference aspects. We have many thousands of profiles on which we will be carrying out EDA, observing the trends, looking for correlations, and visualizing these onto plots for clarity. Our aim is to provide meaningful insights that can benefit users and contribute to a deeper understanding of online dating behavior.
 
 
 Proposal 
