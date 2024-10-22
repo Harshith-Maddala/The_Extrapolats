@@ -1,0 +1,33 @@
+---
+title: "Midterm Project"
+author: " Team Extrapolates"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# OKCupid Dataset Analysis - Code & Technical Analysis
+
+## STEP 1: Loading the Dataset
+
+```{r}
+# Reading the dataset
+cupid_df = read.csv("okcupid_profiles.csv")
+
+# Structure of the dataset
+str(cupid_df)
+```
+
+
+## STEP 2: Data Cleaning
+
+```{r}
+cupid_df <- cupid_df[, !names(cupid_df) %in% paste0("essay", 0:9)]
+
+str(cupid_df)
+
+```
+
