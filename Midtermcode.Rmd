@@ -1,6 +1,6 @@
 ---
 title: "Midterm Project"
-author: "Team Extra"
+author: "Team Extrapolates"
 date: "`r Sys.Date()`"
 output: html_document
 ---
