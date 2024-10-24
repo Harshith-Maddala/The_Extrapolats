@@ -30,4 +30,95 @@ cupid_df <- cupid_df[, !names(cupid_df) %in% paste0("essay", 0:9)]
 str(cupid_df)
 
 ```
+```{r cupid}
+# Load required libraries
+library(tidyverse)
+library(corrplot)
+library(ggplot2)
+library(gridExtra)
+
+# Read and process the data
+df <- read.csv("cleaned.csv")
+
+# Create lifestyle scores
+df_processed <- df %>%
+  mutate(
+    # Create numeric drinking score
+    drink_score = case_when(
+      drinks == "often" ~ 4,
+      drinks == "socially" ~ 3,
+      drinks == "rarely" ~ 2,
+      drinks == "not at all" ~ 1,
+      TRUE ~ NA_real_
+    ),
+    
+    # Create numeric smoking score
+    smoke_score = case_when(
+      smokes == "no" ~ 1,
+      smokes == "when drinking" ~ 2,
+      smokes == "sometimes" ~ 3,
+      TRUE ~ 4
+    ),
+    
+    # Create diet strictness score
+    diet_score = case_when(
+      str_detect(diet, "strictly") ~ 3,
+      str_detect(diet, "mostly") ~ 2,
+      TRUE ~ 1
+    ),
+    
+    # Extract city
+    city = str_extract(location, "([^,]+)(?=,)"),
+    
+    # Create body type categories
+    body_category = case_when(
+      body_type %in% c("fit", "athletic") ~ "athletic",
+      body_type %in% c("thin", "skinny") ~ "thin",
+      body_type == "average" ~ "average",
+      TRUE ~ "other"
+    )
+  )
+
+# Analyze lifestyle patterns by city
+city_patterns <- df_processed %>%
+  group_by(city) %>%
+  summarise(
+    avg_age = mean(age),
+    avg_drink_score = mean(drink_score, na.rm = TRUE),
+    avg_smoke_score = mean(smoke_score, na.rm = TRUE),
+    avg_diet_score = mean(diet_score, na.rm = TRUE),
+    n = n()
+  ) %>%
+  filter(n >= 3)  # Filter cities with at least 3 data points
+
+# Create visualizations
+p1 <- ggplot(df_processed, aes(x = age, y = drink_score, color = body_category)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(title = "Age vs Drinking Habits by Body Type")
+
+p2 <- ggplot(df_processed, aes(x = city, y = smoke_score, fill = body_category)) +
+  geom_boxplot() +
+  coord_flip() +
+  labs(title = "Smoking Habits by City and Body Type")
+
+p3 <- ggplot(df_processed, aes(x = diet_score, fill = city)) +
+  geom_bar(position = "dodge") +
+  labs(title = "Diet Strictness by City")
+
+# Print summary statistics
+print("Summary of Lifestyle Patterns by City:")
+print(city_patterns)
+
+# Create correlation matrix
+lifestyle_cor <- cor(df_processed %>% 
+                      select(age, drink_score, smoke_score, diet_score),
+                    use = "complete.obs")
+print("\nCorrelation Matrix:")
+print(lifestyle_cor)
+
+# Display plots
+grid.arrange(p1, p2, p3, ncol = 2)
+
+```
 
