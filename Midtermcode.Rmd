@@ -17,7 +17,7 @@ output:
 ```{r init, include=FALSE}
 library(ezids)
 # knitr::opts_chunk$set(warning = F, results = "markup", message = F)
-knitr::opts_chunk$set(warning = F, results = "show", message = F)
+knitr::opts_chunk$set(echo = T, warning = F, results = "show", message = F)
 options(scientific=T, digits = 3) 
 ```
 
