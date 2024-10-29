@@ -40,6 +40,29 @@ str(cupid_df)
 
 ## STEP 4: SMART Questions
 
+
+
+### 4.3: Does the drinking and smoking habit of an individual who drinks 'socially'and smokes definitively explain the body type of them?
+
+First we filter people who drinks 'socially' and smokes as social_smokers_df 
+```{r}
+# filter dataset
+social_smokers_df <- cleaned_cupid_df %>% filter(drinks == "socially" & smokes != "no")
+
+# Bar plot
+ggplot(social_smokers_df, aes(x = body_type, fill = body_type)) + geom_bar() + scale_fill_brewer(palette = "Set3") + 
+labs(title = "Body Type Distribution Among Social Drinkers Who Smoke", x = "Body Type", y = "Number of Individuals") + theme_minimal() + theme(axis.text.x = element_text(angle = 45, hjust = 1)) + geom_text(stat = "count", aes(label = ..count..), vjust = -0.5, size = 3)
+
+```
+Most of the people who drink 'socially' and smoke are average, fit and even athletic. People with body types jacked, overweight and used up are lowest in number.  
+
+```{r}
+# Chi-square test
+chi_square_result <- chisq.test(table(social_smokers_df$body_type))
+print(chi_square_result)
+```
+We perform Chi-squared test because the variables we work on are categorized. We can see the p-value is less than 0.05. So we can reject the Null hypothesis and can conclude there is a association between drinking habit and their body type.
+
 ### 4.4 Is there a significant association between an individual’s diet preference (ranging from 'anything' to 'strictly vegetarian') and having a 'healthy' body type?
 ```{r}
 # Filtering the data
