@@ -38,6 +38,34 @@ str(cupid_df)
 
 ## STEP 3: Exploratory Data Analysis
 
+
+{r}
+# Graphical Representations
+
+# Histogram of age
+ggplot(cleaned_cupid_df, aes(x = age, fill = age)) + geom_histogram(binwidth = 5, fill = "blue", color = "black") + labs(title = "Age Distribution", x = "Age", y = "Frequency") + theme_minimal()
+
+
+{r}
+# Density plot for height
+ggplot(cleaned_cupid_df, aes(x=height, fill = height)) +  geom_bar(fill="green", color="black")+ labs(title = "Height Distribution", x = "Height", y = "Frequency") + theme_minimal()
+
+
+After looking at the descriptive stats for variable ‘height’, it is evident there seems to be outlines which might effect our dataset. Let’s remove them.
+
+{r}
+cleaned_cupid_df <- outlierKD2(cleaned_cupid_df, height, rm = TRUE, boxplt = TRUE, histogram = FALSE, qqplt = TRUE)
+
+
+### Distribution of characteristics and marial status variables
+{r}
+ggplot(cleaned_cupid_df, aes(x=sex, fill=sex))+geom_bar(color = "black")+ggtitle("Male and Female count in Dataset") + theme_minimal()+ xlab("Gender") +  ylab("Frequency")
+
+
+{r}
+# Bar plot for status
+ggplot(cleaned_cupid_df, aes(x = status, fill = status)) + geom_bar(fill = "orange") + labs(title = "Status Distribution (Beside Single)", x = "Status", y = "Count") + theme_minimal() + geom_text(stat = "count", aes(label = ..count..), vjust = -0.5, size = 3)
+
 ## STEP 4: SMART Questions
 
 
