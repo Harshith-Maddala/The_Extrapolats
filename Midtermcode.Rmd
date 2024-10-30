@@ -113,7 +113,20 @@ ggplot(cleaned_cupid_df, aes(x = status, fill = status)) + geom_bar(fill = "oran
 
 ## STEP 4: SMART Questions
 
+### 4.2: Which category of educated people are more inclined towards often taking drugs?
 
+For this, first we group people who takes drugs 'often' and 'sometimes' as drug users.
+
+```{r}
+# Recode and filter dataset
+frequent_drug_users_df <- cleaned_cupid_df %>%mutate(drugs = ifelse(drugs %in% c("sometimes", "often"), "Drugs", drugs)) %>% filter(drugs == "Drugs")
+
+# Bar plot 
+ggplot(frequent_drug_users_df, aes(x = education, fill = drugs)) +geom_bar(position = "dodge") +labs(title = "Education Level Among Frequent Drug Users", x = "Education Level",y = "Count of Individuals",fill = "Drug Usage"
+)+scale_fill_manual(values = "red") + theme_minimal() +theme(axis.text.x = element_text(angle = 90, hjust = 1), plot.title = element_text(hjust = 0.4, size = 16, face = "bold")) +geom_text(stat = "count", aes(label = ..count..), position = position_dodge(width = 0.9), vjust = -0.3, size = 2)
+
+```
+The bar plot shows the number of people in education levels who were inclined in using drugs. In that plot we see that the people who graduated from the college/university have the highest number of drug usage where the number is 1641 and the second highest was the people who were working in the college/university where the number is 685. And there are people who were conservative in the usage of drugs and they are the people who dropped out the colleges universities and law schools and any type of education.
 
 ### 4.3: Does the drinking and smoking habit of an individual who drinks 'socially'and smokes definitively explain the body type of them?
 
