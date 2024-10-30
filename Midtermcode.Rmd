@@ -36,8 +36,53 @@ str(cupid_df)
 
 ## STEP 2: Data Cleaning
 
+```{r}
+# Converting gender shortcut
+cleaned_cupid_df <- cleaned_cupid_df %>% mutate(sex = recode(sex, 'f' = 'female', 'm' = 'male'))
+
+# Converting required 'char' columns into 'factor'
+
+cleaned_cupid_df$status <- as.factor(cleaned_cupid_df$status)
+cleaned_cupid_df$sex <- as.factor(cleaned_cupid_df$sex)
+cleaned_cupid_df$orientation <- as.factor(cleaned_cupid_df$orientation)
+cleaned_cupid_df$body_type <- as.factor(cleaned_cupid_df$body_type)
+cleaned_cupid_df$drugs <- as.factor(cleaned_cupid_df$drugs)
+cleaned_cupid_df$diet <- as.factor(cleaned_cupid_df$diet)
+cleaned_cupid_df$drinks <- as.factor(cleaned_cupid_df$drinks)
+cleaned_cupid_df$education <- as.factor(cleaned_cupid_df$education)
+cleaned_cupid_df$ethnicity <- as.factor(cleaned_cupid_df$ethnicity)
+cleaned_cupid_df$job <- as.factor(cleaned_cupid_df$job)
+cleaned_cupid_df$smokes <- as.factor(cleaned_cupid_df$smokes)
+cleaned_cupid_df$smokes <- as.factor(cleaned_cupid_df$smokes)
+```
+
+```{r}
+print("Summary of cleaned data")
+summary(cleaned_cupid_df)
+```
+
 ## STEP 3: Exploratory Data Analysis
 
+### Loading necessary libraries
+```{r}
+# Load necessary libraries
+library(ggplot2)
+library(dplyr)
+library(psych)
+library(tidyverse) 
+library(ggplot2) 
+library(viridis) 
+library(RColorBrewer) 
+library(ggmosaic)
+```
+### Distribution of the Numeric variables
+
+Let’s take a look at descriptive stats of Numeric variables.
+```{r}
+# Descriptive Statistics
+# Numeric variables
+describe(cleaned_cupid_df %>% select(age, height))
+```
 
 {r}
 # Graphical Representations
