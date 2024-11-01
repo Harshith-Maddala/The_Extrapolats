@@ -1,0 +1,250 @@
+---
+title: "Dating with Data - Exploring OKCupid Profiles to Understand User Characteristics"
+author: "Team Extrapolats"
+date: "`r Sys.Date()`"
+output:  
+    rmdformats::readthedown:
+      toc_float: true
+      toc_depth: 3
+      number_sections: false
+      code_folding: hide
+#  includes:
+#        before_body: header.html
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(warning = F, results = "show", message = F)
+library(ezids)
+```
+
+# ABSTRACT
+
+# INTRODUCTION
+
+# SUMMARY OF THE DATASET
+
+# DATASET OVERVIEW
+
+## Loading the Dataset 
+
+### Before Cleaning
+```{r}
+# Reading the dataset
+cupid_df = read.csv("OKCUPID.csv")
+```
+
+```{r}
+# Structure of the dataset
+str(cupid_df)
+```
+
+# DATA CLEANING
+
+```{r}
+# Removing unnecessary columns from dataframe 
+
+library(dplyr)
+
+cupid_df <- cupid_df[, !names(cupid_df) %in% paste0("essay", 0:9)]
+cupid_df <- cupid_df %>% select(-religion)
+cupid_df <- cupid_df %>% select(-last_online)
+cupid_df <- cupid_df %>% select(-income)
+cupid_df <- cupid_df %>% select(-sign)
+cupid_df <- cupid_df %>% select(-speaks)
+cupid_df <- cupid_df %>% select(-pets)
+cupid_df <- cupid_df %>% select(-offspring)
+```
+
+
+```{r}
+
+# Check for empty and NA values 
+empty_values <- sapply(cupid_df, function(x) sum(x == "", na.rm = TRUE))
+na_values <- sapply(cupid_df, function(x) sum(is.na(x)))
+print("Empty Values in Each Column:")
+print(empty_values)
+print("NA Values in Each Column:")
+print(na_values)
+```
+
+
+```{r}
+# Replace empty strings ("") with NA values
+cupid_df[cupid_df == ""] <- NA
+
+# Check for empty and NA values again
+empty_values <- sapply(cupid_df, function(x) sum(x == "", na.rm = TRUE))
+na_values <- sapply(cupid_df, function(x) sum(is.na(x)))
+print("Empty Values in Each Column after NA conversion:")
+print(empty_values)
+print("NA Values in Each Column after NA conversion:")
+print(na_values)
+```
+
+```{r}
+cleaned_cupid_df <- subset(cupid_df, complete.cases(cupid_df))
+na_values <- sapply(cleaned_cupid_df, function(x) sum(is.na(x)))
+print("NA Values in Each Column after cleaning:")
+print(na_values)
+```
+
+
+```{r}
+# Converting gender shortcut
+cleaned_cupid_df <- cleaned_cupid_df %>% mutate(sex = recode(sex, 'f' = 'female', 'm' = 'male'))
+
+# Converting required 'char' columns into 'factor'
+
+cleaned_cupid_df$status <- as.factor(cleaned_cupid_df$status)
+cleaned_cupid_df$sex <- as.factor(cleaned_cupid_df$sex)
+cleaned_cupid_df$orientation <- as.factor(cleaned_cupid_df$orientation)
+cleaned_cupid_df$body_type <- as.factor(cleaned_cupid_df$body_type)
+cleaned_cupid_df$drugs <- as.factor(cleaned_cupid_df$drugs)
+cleaned_cupid_df$diet <- as.factor(cleaned_cupid_df$diet)
+cleaned_cupid_df$drinks <- as.factor(cleaned_cupid_df$drinks)
+cleaned_cupid_df$education <- as.factor(cleaned_cupid_df$education)
+cleaned_cupid_df$ethnicity <- as.factor(cleaned_cupid_df$ethnicity)
+cleaned_cupid_df$job <- as.factor(cleaned_cupid_df$job)
+cleaned_cupid_df$smokes <- as.factor(cleaned_cupid_df$smokes)
+cleaned_cupid_df$smokes <- as.factor(cleaned_cupid_df$smokes)
+```
+
+## Summary of the cleaned Dataset
+```{r}
+summary(cleaned_cupid_df)
+
+```
+# EXPLORATORY DATA ANALYSIS
+
+```{r}
+# Load necessary libraries
+library(ggplot2)
+library(dplyr)
+library(psych)
+library(tidyverse) 
+library(ggplot2) 
+library(viridis) 
+library(RColorBrewer) 
+library(ggmosaic)
+```
+
+## Distribution of Numeric Variables
+
+```{r}
+# Descriptive Statistics
+# Numeric variables
+describe(cleaned_cupid_df %>% select(age, height))
+```
+
+### Age
+```{r}
+# Graphical Representations
+
+# Histogram of age
+ggplot(cleaned_cupid_df, aes(x = age, fill = age)) + geom_histogram(binwidth = 5, fill = "blue", color = "black") + labs(title = "Age Distribution", x = "Age", y = "Frequency") + theme_minimal()
+```
+
+### Height
+```{r}
+# Density plot for height
+ggplot(cleaned_cupid_df, aes(x=height, fill = height)) +  geom_bar(fill="green", color="black")+ labs(title = "Height Distribution", x = "Height", y = "Frequency") + theme_minimal()
+```
+
+### Outlier removal
+```{r}
+cleaned_cupid_df <- outlierKD2(cleaned_cupid_df, height, rm = TRUE, boxplt = TRUE, histogram = FALSE, qqplt = TRUE)
+```
+
+### Gender Distribution
+```{r}
+ggplot(cleaned_cupid_df, aes(x=sex, fill=sex))+geom_bar(color = "black")+ggtitle("Male and Female count in Dataset") + theme_minimal()+ xlab("Gender") +  ylab("Frequency")
+```
+
+### Marital Status
+```{r}
+# Bar plot for status
+ggplot(cleaned_cupid_df, aes(x = status, fill = status)) + geom_bar(fill = "orange") + labs(title = "Status Distribution (Beside Single)", x = "Status", y = "Count") + theme_minimal() + geom_text(stat = "count", aes(label = ..count..), vjust = -0.5, size = 3)
+```
+
+### Distribution of Height by Body Type
+```{r}
+# Boxplot of height by body type
+ggplot(cleaned_cupid_df, aes(x = body_type, y = height)) + geom_boxplot(fill = "lightblue") + labs(title = "Height by Body Type", x = "Body Type", y = "Height") + theme_minimal()
+
+```
+
+# SMART QUESTIONS
+
+### Question 1: What is the distribution of ages among users, and how does it differ between genders?
+
+```{r}
+# scatter plot
+ggplot(cleaned_cupid_df, aes(x = age, color = sex)) + geom_freqpoly(stat = "count", aes(y = ..count..)) + labs(title = "Age Distribution by Gender", x = "Age", y = "Number of Users") + scale_color_manual(values = c("blue", "red"), labels = c("Female", "Male")) + theme_minimal()
+
+```
+The Scatter plot above shows Age distribution by gender indicates that Males aged 25-26 and Females around 25-28 are highest in number. The majority of users are males, but after age 55, females are more.
+
+### Question 2: Which category of educated people are more inclined towards often taking drugs?
+
+For this, first we group people who takes drugs 'often' and 'sometimes' as drug users.
+```{r}
+# Recode and filter dataset
+frequent_drug_users_df <- cleaned_cupid_df %>%mutate(drugs = ifelse(drugs %in% c("sometimes", "often"), "Drugs", drugs)) %>% filter(drugs == "Drugs")
+
+# Bar plot 
+ggplot(frequent_drug_users_df, aes(x = education, fill = drugs)) +geom_bar(position = "dodge") +labs(title = "Education Level Among Frequent Drug Users", x = "Education Level",y = "Count of Individuals",fill = "Drug Usage"
+)+scale_fill_manual(values = "red") + theme_minimal() +theme(axis.text.x = element_text(angle = 90, hjust = 1), plot.title = element_text(hjust = 0.4, size = 16, face = "bold")) +geom_text(stat = "count", aes(label = ..count..), position = position_dodge(width = 0.9), vjust = -0.3, size = 2)
+
+```
+
+The bar plot shows the number of people in education levels who were inclined in using drugs. In that plot we see that the people who graduated from the college/university have the highest number of drug usage where the number is 1641 and the second highest was the people who were working in the college/university where the number is 685. And there are people who were conservative in the usage of drugs and they are the people who dropped out the colleges universities and law schools and any type of education.
+
+### Question 3: Does the drinking and smoking habit of an individual who drinks 'socially'and smokes definitively explain the body type of them?
+First we filter people who drinks 'socially' and smokes as social_smokers_df 
+```{r}
+# filter dataset
+social_smokers_df <- cleaned_cupid_df %>% filter(drinks == "socially" & smokes != "no")
+
+# Bar plot
+ggplot(social_smokers_df, aes(x = body_type, fill = body_type)) + geom_bar() + scale_fill_brewer(palette = "Set3") + 
+labs(title = "Body Type Distribution Among Social Drinkers Who Smoke", x = "Body Type", y = "Number of Individuals") + theme_minimal() + theme(axis.text.x = element_text(angle = 45, hjust = 1)) + geom_text(stat = "count", aes(label = ..count..), vjust = -0.5, size = 3)
+
+```
+
+Most of the people who drink 'socially' and smoke are average, fit and even athletic. People with body types jacked, overweight and used up are lowest in number. 
+
+```{r}
+# Chi-square test
+chi_square_result <- chisq.test(table(social_smokers_df$body_type))
+print(chi_square_result)
+```
+
+We perform Chi-squared test because the variables we work on are categorized. We can see the p-value is less than 0.05. So we can reject the Null hypothesis and can conclude there is a association between drinking habit and their body type.
+
+
+### Question 4: Is there a significant association between an individual’s diet preference (ranging from 'anything' to 'strictly vegetarian') and having a 'healthy' body type?
+
+```{r}
+# Filtering the data
+diet_body_df <- cleaned_cupid_df %>%filter(diet %in% c("anything", "strictly anything", "mostly vegetarian", "strictly vegetarian")) %>%mutate(diet_category = ifelse(diet %in% c("anything", "strictly anything"), "Anything", "Vegetarian"),healthy_body_type = ifelse(body_type %in% c("athletic", "average", "fit", "jacked"), "Healthy", "Unhealthy"))
+
+# bar plot 
+ggplot(diet_body_df, aes(x = diet_category, fill = healthy_body_type)) +geom_bar(position = "dodge") +labs(title = "Diet Preference and 'Healthy' Body Type Distribution",x = "Diet Category",y = "Number of Individuals",fill = "Body Type (Healthy)") +scale_fill_brewer(palette = "Set3") +theme_minimal() +geom_text(stat = "count", aes(label = ..count..),position = position_dodge(width = 0.9), vjust = -0.5, size = 3) 
+
+```
+
+people who eat both vegetarian and non-vegetarian were more compared to people who stick with vegetarian food. But the difference in healthy and unhealthy body is less for vegetarians compared to people who eat anything.
+
+```{r}
+# Chi-square
+diet_body_table <- table(diet_body_df$diet_category, diet_body_df$healthy_body_type)
+chi_square_result <- chisq.test(diet_body_table)
+print(chi_square_result)
+```
+
+We perform Chi-squared test because the variables we work on are categorized. We can see the p-value is equal to 0.05. So we can reject the Null hypothesis and can conclude there is a association between diet inntake and body type a person has.
+
+# CONCLUSION
+
+# REFERENCES
