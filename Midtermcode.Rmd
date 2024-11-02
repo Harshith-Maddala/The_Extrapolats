@@ -158,10 +158,10 @@ We perform Chi-squared test because the variables we work on are categorized. We
 ### 4.4 Is there a significant association between an individual’s diet preference (ranging from 'anything' to 'strictly vegetarian') and having a 'healthy' body type?
 ```{r}
 # Filtering the data
-diet_body_df <- cleaned_cupid_df %>%filter(diet %in% c("anything", "strictly anything", "mostly vegetarian", "strictly vegetarian")) %>%mutate(diet_category = ifelse(diet %in% c("anything", "strictly anything"), "Anything", "Vegetarian"),healthy_body_type = ifelse(body_type %in% c("athletic", "average", "fit", "jacked"), "Healthy", "Unhealthy"))
+diet_body_df <- cleaned_cupid_df %>% filter(diet %in% c("anything", "strictly anything", "mostly vegetarian", "strictly vegetarian")) %>% mutate(diet_category = ifelse(diet %in% c("anything", "strictly anything"), "Anything", "Vegetarian"), healthy_body_type = ifelse(body_type %in% c("athletic", "average", "fit", "jacked"), "Healthy", ifelse(body_type %in% c("overweight", "skinny", "used up", "little extra"), "Unhealthy", NA))) %>% filter(!is.na(healthy_body_type))  
 
-# bar plot 
-ggplot(diet_body_df, aes(x = diet_category, fill = healthy_body_type)) +geom_bar(position = "dodge") +labs(title = "Diet Preference and 'Healthy' Body Type Distribution",x = "Diet Category",y = "Number of Individuals",fill = "Body Type (Healthy)") +scale_fill_brewer(palette = "Set3") +theme_minimal() +geom_text(stat = "count", aes(label = ..count..),position = position_dodge(width = 0.9), vjust = -0.5, size = 3) 
+# Bar plot 
+ggplot(diet_body_df, aes(x = diet_category, fill = healthy_body_type)) + geom_bar(position = "dodge") + labs(title = "Diet Preference and 'Healthy' Body Type Distribution", x = "Diet Category", y = "Number of Individuals", fill = "Body Type (Healthy)") + scale_fill_brewer(palette = "Set3") + theme_minimal() + geom_text(stat = "count", aes(label = ..count..), position = position_dodge(width = 0.9), vjust = -0.5, size = 3)
 
 ```
 people who eat both vegetarian and non-vegetarian were more compared to people who stick with vegetarian food. But the difference in healthy and unhealthy body is less for vegetarians compared to people who eat anything.
