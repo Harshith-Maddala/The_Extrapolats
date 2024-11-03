@@ -41,6 +41,9 @@ str(cupid_df)
 
 # DATA CLEANING
 
+We started by importing the dplyr package, which is useful for data manipulation in R. Then, we concentrated on cleaning up the cupid_df dataset by removing unnecessary columns. To create a list of columns to exclude, we utilized names() and paste0(), focusing on the columns falling between essay0 and essay9. Additional columns such as religion, last_online, income, sign, speaks, pets, and offspring were removed to focus our analysis on the pertinent information. 
+
+
 ```{r}
 # Removing unnecessary columns from dataframe 
 
@@ -57,6 +60,9 @@ cupid_df <- cupid_df %>% select(-offspring)
 ```
 
 
+Next, we examined the dataset to identify any instances of empty strings or NA values. We used `sapply()` to apply a function to all columns in `cupid_df` to count empty strings and NA values. This has allowed us to gain a clear comprehension of the data quality by identifying the amount of empty strings and missing values in each column. 
+
+
 ```{r}
 
 # Check for empty and NA values 
@@ -67,6 +73,8 @@ print(empty_values)
 print("NA Values in Each Column:")
 print(na_values)
 ```
+
+After we found these problems, we substituted all absent strings with NA values. This simplified the management of data gaps. We confirmed again to ensure that all blank strings were changed to NA, making our dataset more reliable and consistent. 
 
 
 ```{r}
@@ -82,12 +90,21 @@ print("NA Values in Each Column after NA conversion:")
 print(na_values)
 ```
 
+
+We used subset() and complete.cases() to create a new dataframe, cleaned_cupid_df, by removing any incomplete cases. Removing rows with missing values was an essential step to guarantee the accuracy of our analysis. After cleaning, we double-checked for missing values to confirm that all rows were fully filled. 
+
+
+
 ```{r}
 cleaned_cupid_df <- subset(cupid_df, complete.cases(cupid_df))
 na_values <- sapply(cleaned_cupid_df, function(x) sum(is.na(x)))
 print("NA Values in Each Column after cleaning:")
 print(na_values)
 ```
+
+
+Following that, we provided further clarification on the gender variable. Through the use of mutate() and recode(), we converted the abbreviated terms ('f' for female and 'm' for male) to complete words, which enhances the readability and comprehension of the data for future users.
+
 
 
 ```{r}
@@ -110,9 +127,17 @@ cleaned_cupid_df$smokes <- as.factor(cleaned_cupid_df$smokes)
 cleaned_cupid_df$smokes <- as.factor(cleaned_cupid_df$smokes)
 ```
 
+Next, we converted multiple character columns into factors using the `as.factor()` function. This step is essential when working with categorical data in R because it helps with organization and allows for more accurate statistical analysis. Altering these columns was crucial for any forthcoming modeling we intended to conduct. 
+
+
 ## Summary of the cleaned Dataset
 ```{r}
 summary(cleaned_cupid_df)
+
+
+After we examined the data, we condensed it with the `summary()` function. This enabled us to develop a thorough comprehension of the dataset, aiding us in understanding its distribution and characteristics before diving into a more in-depth analysis.
+
+
 
 ```
 # EXPLORATORY DATA ANALYSIS
