@@ -201,7 +201,11 @@ ggplot(frequent_drug_users_df, aes(x = education, fill = drugs)) +geom_bar(posit
 The bar plot shows the number of people in education levels who were inclined in using drugs. In that plot we see that the people who graduated from the college/university have the highest number of drug usage where the number is 1641 and the second highest was the people who were working in the college/university where the number is 685. And there are people who were conservative in the usage of drugs and they are the people who dropped out the colleges universities and law schools and any type of education.
 
 ### Question 3: Does the drinking and smoking habit of an individual who drinks 'socially'and smokes definitively explain the body type of them?
-First we filter people who drinks 'socially' and smokes as social_smokers_df 
+
+In order to understand how the body type of individuals who both drink socially and smoke can be influenced by their drinking and smoking habits, we initially narrowed down our data to this particular group, forming a subset known as social_smokers_df. This specific group consists of individuals who engage in social drinking and smoking, but does not include non-smokers. 
+
+We generated a bar chart to display how body types are distributed among these occasional smokers in our study. The storyline uncovers a few fascinating patterns: most people in this category have "average," "fit," and "athletic" body shapes. On the other hand, there is a distinct decrease in the number of people labeled as "ripped," "obese," or "spent." This pattern indicates that casual drinkers who also smoke tend to have a more average or healthier body shape compared to individuals with more drastic body shapes. 
+
 ```{r}
 # filter dataset
 social_smokers_df <- cleaned_cupid_df %>% filter(drinks == "socially" & smokes != "no")
@@ -220,7 +224,10 @@ chi_square_result <- chisq.test(table(social_smokers_df$body_type))
 print(chi_square_result)
 ```
 
-We perform Chi-squared test because the variables we work on are categorized. We can see the p-value is less than 0.05. So we can reject the Null hypothesis and can conclude there is a association between drinking habit and their body type.
+Next, We conducted a Chi-squared test to examine the relationship between body types and drinking behaviors. This test is appropriate for this situation since we are working with classified data. The p-value obtained from the Chi-squared test was less than 0.05. This indicates that we can reject the null hypothesis that states there is no correlation between drinking habits and body types.
+
+The results reveal an interesting link between how people drink socially and their body types. It seems that body shapes might be connected to casual drinking and smoking, possibly influenced by lifestyle and social settings. Overall, our findings point to the need for more research into how these habits could affect someone’s appearance.
+
 
 
 ### Question 4: Is there a significant association between an individual’s diet preference (ranging from 'anything' to 'strictly vegetarian') and having a 'healthy' body type?
@@ -246,6 +253,8 @@ print(chi_square_result)
 We perform Chi-squared test because the variables we work on are categorized. We can see the p-value is equal to 0.05. So we can reject the Null hypothesis and can conclude there is a association between diet inntake and body type a person has.
 
 # CONCLUSION
+
+
 
 # REFERENCES
 
