@@ -132,7 +132,7 @@ cleaned_cupid_df$smokes <- as.factor(cleaned_cupid_df$smokes)
 cleaned_cupid_df$smokes <- as.factor(cleaned_cupid_df$smokes)
 ```
 
-Next, we converted multiple character columns into factors using the `as.factor()` function. 
+Next, we converted multiple character columns into factors using the as.factor() function. 
 This step is essential when working with categorical data in R because it helps with organization and allows for more accurate statistical analysis. 
 Altering these columns was crucial for any forthcoming modeling we intended to conduct. 
 
