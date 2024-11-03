@@ -162,6 +162,12 @@ library(ggmosaic)
 describe(cleaned_cupid_df %>% select(age, height))
 ```
 
+We started our data exploration by importing key libraries such as ggplot2, dplyr, and other R tools to assist us in the efficient analysis and visualization of the data. 
+
+Our primary goal was to examine how quantitative variables, like age and height, were distributed through the use of descriptive statistics. This helped us gain a better understanding of the data. 
+We used the describe() function to produce a summary of the variables in the cleaned_cupid_df dataset.
+
+
 ### Age
 ```{r}
 # Graphical Representations
@@ -170,11 +176,18 @@ describe(cleaned_cupid_df %>% select(age, height))
 ggplot(cleaned_cupid_df, aes(x = age, fill = age)) + geom_histogram(binwidth = 5, fill = "blue", color = "black") + labs(title = "Age Distribution", x = "Age", y = "Frequency") + theme_minimal()
 ```
 
+We created a histogram to show how age is distributed. We employed ggplot() to generate a chart with age on the x-axis, with a blue color palatte. This helped us in visualizing how ages were spread out in the dataset. 
+The bar graph was made with a bin width of 5, and axes titles and labels were added for improved clarity. 
+
 ### Height
 ```{r}
 # Density plot for height
 ggplot(cleaned_cupid_df, aes(x=height, fill = height)) +  geom_bar(fill="green", color="black")+ labs(title = "Height Distribution", x = "Height", y = "Frequency") + theme_minimal()
 ```
+
+Next, we made a density plot to show how heights are spread out among different body types. We used geom_bar to display different height values, filling the bars with green and then outlining them in black. 
+The plot included titles and markings on the axes for clearer comprehension. 
+
 
 ### Outlier removal
 ```{r}
@@ -186,11 +199,19 @@ cleaned_cupid_df <- outlierKD2(cleaned_cupid_df, height, rm = TRUE, boxplt = TRU
 ggplot(cleaned_cupid_df, aes(x=sex, fill=sex))+geom_bar(color = "black")+ggtitle("Male and Female count in Dataset") + theme_minimal()+ xlab("Gender") +  ylab("Frequency")
 ```
 
+Subsequently, we proceeded to investigate the gender distribution in the dataset. A bar graph was made using ggplot to display the numbers of males and females, filled with corresponding colors and bordered in black. 
+The plot was titled "Count of Men and Women in Dataset," providing a clear overview of gender distribution. 
+
+
 ### Marital Status
 ```{r}
 # Bar plot for status
 ggplot(cleaned_cupid_df, aes(x = status, fill = status)) + geom_bar(fill = "orange") + labs(title = "Status Distribution (Beside Single)", x = "Status", y = "Count") + theme_minimal() + geom_text(stat = "count", aes(label = ..count..), vjust = -0.5, size = 3)
 ```
+
+Next, we analyzed marital status by utilizing an alternate bar graph. The bars were colored orange to indicate the quantities of various status groups in the visualization. 
+Labels were included on the bars to display the quantity for every category, enhancing the data's clarity. 
+
 
 ### Distribution of Height by Body Type
 ```{r}
@@ -198,6 +219,13 @@ ggplot(cleaned_cupid_df, aes(x = status, fill = status)) + geom_bar(fill = "oran
 ggplot(cleaned_cupid_df, aes(x = body_type, y = height)) + geom_boxplot(fill = "lightblue") + labs(title = "Height by Body Type", x = "Body Type", y = "Height") + theme_minimal()
 
 ```
+
+Lastly, we looked at the relationship between height and body shape by using a boxplot. The chart displayed the relationship between height and body shape, using light blue shaded boxes. 
+These visuals provided valuable insights into the data by showing the varying heights among different body types. 
+
+
+Overall, the use of both graphs and numerical summaries helped us comprehend the data's structure and the relationships between various variables.
+
 
 # SMART QUESTIONS
 
