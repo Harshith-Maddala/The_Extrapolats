@@ -155,14 +155,13 @@ Altering these columns was crucial for any forthcoming modeling we intended to c
 ## Summary of the cleaned Dataset
 ```{r}
 summary(cleaned_cupid_df)
-
+```
 
 After we examined the data, we condensed it with the summary() function. 
 This enabled us to develop a thorough comprehension of the dataset, aiding us in understanding its distribution and characteristics before diving into a more in-depth analysis.
 
 
 
-```
 # EXPLORATORY DATA ANALYSIS
 
 ```{r}
