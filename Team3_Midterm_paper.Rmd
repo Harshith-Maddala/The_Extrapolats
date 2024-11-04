@@ -37,7 +37,7 @@ Using statistical methods and visualizations, this analysis seeks to provide a d
 
 # SUMMARY OF THE DATASET
 
-The original OkCupid dataset was 59,946 observations of 31 variables. The data also included user characteristics: age-dev, which ranged from 22 to 38 in integers; status, indicating single or available; sex, m/f; and orientation, straight. Physical attributes would be recorded as body type, such as 'a little extra', 'average', 'thin', and height in inches, ranging from 65-71 inches. Lifestyle choices marked by diet such as 'strictly anything', 'mostly other', drinks noted to be taken 'socially', drugs came under 'never' or 'sometimes'.
+The original OkCupid dataset was 59,946 observations of 31 variables. The data also included user characteristics: age-dev, which ranged from 22 to 38 in integers; status, indicating single or available; sex, m/f; and orientation, straight. Physical attributes would be recorded as body type, such as 'a little extra', 'average', 'thin', and height in inches, ranging from 65-71 inches. Lifestyle choices were marked by diet such as 'strictly anything', 'mostly other', drinks noted to be taken 'socially', drugs came under 'never' or 'sometimes'.
 
 # DATASET OVERVIEW
 
