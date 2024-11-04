@@ -24,6 +24,8 @@ library(ezids)
 
 # SUMMARY OF THE DATASET
 
+The original OkCupid dataset was 59,946 observations with 31 variables. The data also included user characteristics: age-dev, which ranged from 22 to 38 in integers; status, indicating single or available; sex, m/f; and orientation, straight. Physical attributes would be recorded as body type, such as 'a little extra', 'average', 'thin', and height in inches, ranging from 65-71 inches. Lifestyle choices were marked by diet, such as 'strictly anything', 'mostly other', drinks were noted to be taken 'socially', and drugs came under 'never' or 'sometimes'. The educational background ranged from 'working on college/university' to 'graduated from masters program'. Income data ranged from 20000 to 80000 and included some missing values (-1). The location data was all Bay Area specific: 'south san francisco', 'oakland', 'berkeley'. Other features in the dataset included personal preferences such as offspring ('doesn't have kids, but might want them'), pets ('likes dogs and likes cats'), religion, sign. Data also included essay responses describing self-presentations and interests of users, though those were mostly cut off in this display: essay0-essay2.
+
 # DATASET OVERVIEW
 
 ## Loading the Dataset 
