@@ -60,7 +60,6 @@ str(cupid_df)
 
 We started by importing the dplyr package, which is useful for data manipulation in R. Then, we concentrated on cleaning up the cupid_df dataset by removing unnecessary columns. To create a list of columns to exclude, we utilized names() and paste0(), focusing on the columns falling between essay0 and essay9. Additional columns such as religion, last_online, income, sign, speaks, pets, and offspring were removed to focus our analysis on the pertinent information. 
 
-
 ```{r}
 # Removing unnecessary columns from dataframe 
 
