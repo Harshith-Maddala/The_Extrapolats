@@ -288,7 +288,7 @@ ggplot(frequent_drug_users_df, aes(x = education, fill = drugs)) +geom_bar(posit
 )+scale_fill_manual(values = "red") + theme_minimal() +theme(axis.text.x = element_text(angle = 90, hjust = 1), plot.title = element_text(hjust = 0.4, size = 16, face = "bold")) +geom_text(stat = "count", aes(label = ..count..), position = position_dodge(width = 0.9), vjust = -0.3, size = 2)
 ```
 
-Our analysis of the pattern of drug usage by education level is quite illustrative. As clearly denoted in the visualization, the group that reported completing college/university had the highest disposition towards the use of drugs, with 1,641 users. 
+Our analysis of the pattern of drug usage by education level is quite illustrative. As clearly denoted in the visualization, the group that reported completing college/university had the highest disposition towards the use of drugs, with 1,641 users. This then follows those currently working towards their college/university education, with 685 users.
 
 ### Question 3: Does the drinking and smoking habit of an individual who drinks 'socially'and smokes definitively explain the body type of them?
 
