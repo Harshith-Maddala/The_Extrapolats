@@ -28,6 +28,8 @@ The original OkCupid dataset was 59,946 observations with 31 variables. The data
 
 # DATASET OVERVIEW
 
+The OkCupid dataset contains 59,946 observations on 31 variables about users in the San Francisco Bay Area in 2012. Examples of the wide range of user information captured by data are demographic information, which includes age, sex, status, and orientation; background information, which includes ethnicity, religion, and language proficiency; location information from various Bay Area cities. Physical attributes of height and body_type and lifestyle choices, such as drinks, smokes, drugs, and diet. Personal preferences regarding pets and offspring are also represented. This dataset contains education and career-related information: education level, income, job, timestamps of user activity, and essay responses-essay0-essay2-which include self-descriptions. Although raw data provides a broad range of user characteristics, several data quality issues-which include inconsistencies and missing values-make it hardly analyzable without extensive preprocessing.
+
 ## Loading the Dataset 
 
 ### Before Cleaning
