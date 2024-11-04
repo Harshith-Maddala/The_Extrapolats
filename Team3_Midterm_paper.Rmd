@@ -37,7 +37,7 @@ Using statistical methods and visualizations, this analysis seeks to provide a d
 
 # SUMMARY OF THE DATASET
 
-The original OkCupid dataset was 59,946 observations of 31 variables.
+The original OkCupid dataset was 59,946 observations of 31 variables. The data also included user characteristics: age-dev, which ranged from 22 to 38 in integers;
 
 # DATASET OVERVIEW
 
