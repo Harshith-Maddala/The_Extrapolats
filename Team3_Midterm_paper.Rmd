@@ -288,7 +288,7 @@ ggplot(frequent_drug_users_df, aes(x = education, fill = drugs)) +geom_bar(posit
 )+scale_fill_manual(values = "red") + theme_minimal() +theme(axis.text.x = element_text(angle = 90, hjust = 1), plot.title = element_text(hjust = 0.4, size = 16, face = "bold")) +geom_text(stat = "count", aes(label = ..count..), position = position_dodge(width = 0.9), vjust = -0.3, size = 2)
 ```
 
-Interesting insights are drawn from the analysis of drug usage patterns across education levels. As shown in the visualization, the highest drug users were from the 'completed college/university' category at 1,641 users, closely followed by the 'still working on college/university' users at 685 users. For instance, individuals who dropped out of colleges, universities, and law schools had the most conservative patterns of drug use. This analysis therefore shows that completion of higher education, especially college/university level, corresponds with higher reported use of drugs, while discontinued education is associated with more conservative usage. These findings set an important context in which the association between educational attainment and drug use behaviors can be understood in the dating profile data.
+Our analysis of the pattern of drug usage by education level is quite illustrative.
 
 ### Question 3: Does the drinking and smoking habit of an individual who drinks 'socially'and smokes definitively explain the body type of them?
 
