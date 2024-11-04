@@ -75,7 +75,6 @@ cupid_df <- cupid_df %>% select(-pets)
 cupid_df <- cupid_df %>% select(-offspring)
 ```
 
-
 Next, we examined the dataset to identify any instances of empty strings or NA values. We used sapply() to apply a function to all columns in cupid_df to count empty strings and NA values. 
 This has allowed us to gain a clear comprehension of the data quality by identifying the amount of empty strings and missing values in each column. 
 
