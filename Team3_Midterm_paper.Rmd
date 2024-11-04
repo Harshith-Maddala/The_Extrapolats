@@ -20,9 +20,13 @@ library(ezids)
 
 # ABSTRACT
 
+This project presents an analysis of the OKCupid dataset, focusing on the relationships between demographic characteristics, lifestyle choices, and physical attributes of users. The analysis involves multiple steps: data cleaning, exploratory data analysis (EDA), and hypothesis testing. 
 
+Initially, we processed the dataset by converting relevant character columns into factors and removing outliers. We then explored the distribution of key variables such as age, height, gender, and relationship status through descriptive statistics and visualizations. 
 
+Our findings reveal significant insights, including a notable correlation between education levels and drug use, as well as the prevalence of specific body types among social drinkers who smoke. Additionally, we examined the relationship between dietary preferences and body type, finding an association between diet category and healthiness of body types.
 
+Using chi-squared tests, we confirmed the statistical significance of these relationships, allowing us to reject the null hypotheses for both lifestyle factors. Overall, this analysis underscores the complex interplay between personal choices and demographic factors within the context of online dating profiles.
 
 # INTRODUCTION
 
