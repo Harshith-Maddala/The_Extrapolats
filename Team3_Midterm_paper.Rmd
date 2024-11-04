@@ -193,6 +193,15 @@ We used the describe() function to produce a summary of the variables in the cle
 
 
 ### Age
+
+The  code generates a histogram to visualize the age distribution of users in the OKCupid dataset. Here's a breakdown of the key components and what they reveal:
+Data Input:
+The ggplot function initializes the plotting system using the cleaned dataset cleaned_cupid_df, with the age variable mapped to the x-axis.
+
+Histogram Creation:
+The geom_histogram function creates the histogram. The binwidth parameter is set to 5, meaning ages will be grouped into 5-year intervals. This choice balances detail with clarity, allowing for an effective representation of age distribution without overwhelming the viewer with too many bins.
+The fill argument assigns a blue color to the bars, while color = "black" outlines the bars, enhancing visual contrast and making the distribution clearer.
+
 ```{r}
 # Graphical Representations
 
@@ -200,8 +209,15 @@ We used the describe() function to produce a summary of the variables in the cle
 ggplot(cleaned_cupid_df, aes(x = age, fill = age)) + geom_histogram(binwidth = 5, fill = "blue", color = "black") + labs(title = "Age Distribution", x = "Age", y = "Frequency") + theme_minimal()
 ```
 
-We created a histogram to show how age is distributed. We employed ggplot() to generate a chart with age on the x-axis, with a blue color palatte. This helped us in visualizing how ages were spread out in the dataset. 
-The bar graph was made with a bin width of 5, and axes titles and labels were added for improved clarity. 
+Labels and Themes:
+labs is used to add titles and axis labels, which provide context for the graph. The title "Age Distribution" briefly summarizes what the viewer is examining, while the x-axis and y-axis labels indicate the variables represented.
+The theme_minimal() function applies a clean and simple aesthetic to the plot, minimizing distractions and focusing attention on the data.
+Insights and Interpretation:
+By analyzing the histogram, viewers can identify trends such as the most common age ranges among users, any skewness in the distribution, and the overall age demographic of the user base.
+
+For instance, if there are noticeable peaks at certain ages, this could indicate popular age groups on the platform. Conversely, if the distribution is flat, it may suggest a more diverse age representation.
+Overall, this histogram serves as a foundational analysis tool, providing essential insights into the age demographics of the OKCupid user base that can inform subsequent analyses related to user behaviors and preferences.
+4o mini
 
 ### Height
 ```{r}
