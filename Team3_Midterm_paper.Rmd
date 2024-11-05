@@ -17,6 +17,7 @@ knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_chunk$set(warning = F, results = "show", message = F)
 library(ezids)
 ```
+![](loveimage.jpg) 
 
 # ABSTRACT
 
