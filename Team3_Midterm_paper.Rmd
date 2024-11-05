@@ -326,6 +326,11 @@ The results reveal an interesting link between how people drink socially and the
 
 ### Question 4: Is there a significant association between an individual’s diet preference (ranging from 'anything' to 'strictly vegetarian') and having a 'healthy' body type?
 
+Now that we saw that there is an association between smoking and drinking habits and an individual's body type, we can do the same to see if there is an  similar association between body type and diet preferences a person has. We could see from the summary of the dataset that there are 6 types of diet preferences and 12 types of body types.
+
+For diet preferences, we divide them into two groups: *Vegetarian* and *Anything. The Vegetarian group includes both 'mostly anything' and 'strictly vegetarian', while anything group contains 'anything' and 'strictly anything'. Similarly, we divide body types into two categories: **Healthy* and *Unhealthy*. Given the 12 body types we have, we will consider only specific body types into these categories, focusing on those defined as healthy(athletic, average, fit, jacked) and unhealthy (overweight, skinny, used up, little extra, thin). There are other body types, such as curvy, full figured but they clearly don't fit into either Healthy or Unhealthy categories. This classification tells us if consuming vegetarian food mainly has any influence on a individual's body type. However, we cannot tell if it was a positive or negative influence.
+
+Before deciding to use a statistical test, we will build a Bar Graph to understand the distribution of dietary preferences across different body types, allowing us to identify any trends or relationships. To do that, we first filter the data in a new dataframe called 'diet_body_df'. We will filter the data in variables 'diet' and 'body_type' based on categories we mentioned above.
 ```{r}
 # Filtering the data
 diet_body_df <- cleaned_cupid_df %>%filter(diet %in% c("anything", "strictly anything", "mostly vegetarian", "strictly vegetarian")) %>%mutate(diet_category = ifelse(diet %in% c("anything", "strictly anything"), "Anything", "Vegetarian"),healthy_body_type = ifelse(body_type %in% c("athletic", "average", "fit", "jacked"), "Healthy", "Unhealthy"))
@@ -353,10 +358,28 @@ chi_square_result <- chisq.test(diet_body_table)
 print(chi_square_result)
 ```
 
-We perform Chi-squared test because the variables we work on are categorized. We can see the p-value is equal to 0.05. So we can reject the Null hypothesis and can conclude there is a association between diet inntake and body type a person has.
+The reason Yates' continuity correction was applied is to adjust the discrete nature of the data. It decreases potential bias in smaller samples by adjusting Chi-square statistic. Despite this change, we got a p-value smaller than 0.05, leading us to reject the null hypothesis. *There is significant association between diet preference and body type among individuals*.
 
 # CONCLUSION
+### SMART Q1
 
+The frequency plot shows that Male users were more in number compared to the Female users overall. Most number of users in male are around the age 25-26 and for female it is around 26-28. Although males make up the majority of users across most age groups, females become more dominant in number after age 55.
+
+
+### SMART Q2
+
+The bar plot shows that the people who graduated from the college/university have the highest number of drug usage where the number is 1641 and the second highest was the people who were working in the college/university where the number is 685. Surprisingly, the people who dropped out of colleges, universities and law schools and any type of education show notably low drug usage.
+
+
+### SMART Q3
+
+Individuals with athletic, average, and fit body types were over 60% of those with both smoking and drinking habits. People with normal body types such as curvy, thin and a little extra were next in number. To know for sure if there is a association between body types and these habits, we perform a Chi-squared test on the filtered data frame. The p-value is very much less than 0.05, implying there is a association between the smoking and drinking habits to body type of an individual.
+
+
+### SMART Q4
+
+Overall people who doesn't have any dietary preference were more in number compared to people who mostly prefers vegetarian food. They also have slightly more healthier body type compared to vegetarians. 
+When Chi-squared test applied once again used and applied on filtered data frame, the P-value was less than 0.05, implying there is a association between diet preference and body type.
 
 
 # REFERENCES
