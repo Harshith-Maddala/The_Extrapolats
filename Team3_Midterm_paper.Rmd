@@ -332,8 +332,17 @@ diet_body_df <- cleaned_cupid_df %>%filter(diet %in% c("anything", "strictly any
 ggplot(diet_body_df, aes(x = diet_category, fill = healthy_body_type)) +geom_bar(position = "dodge") +labs(title = "Diet Preference and 'Healthy' Body Type Distribution",x = "Diet Category",y = "Number of Individuals",fill = "Body Type (Healthy)") +scale_fill_brewer(palette = "Set3") +theme_minimal() +geom_text(stat = "count", aes(label = ..count..),position = position_dodge(width = 0.9), vjust = -0.5, size = 3) 
 
 ```
+#### OBSERVATION:
 
-people who eat both vegetarian and non-vegetarian were more compared to people who stick with vegetarian food. But the difference in healthy and unhealthy body is less for vegetarians compared to people who eat anything.
+Overall those who consume both vegetarian and non-vegetarian food are more in number, comprising around **72 percent** of the total in filtered data. And in that 72 percent, **84 percent** individual have a healthy body type. This pattern of having a higher proportion of healthier body types was also observed among vegetarians. Around **81 percent** individuals who mostly consume vegetarian have healthier body types. 
+
+Now, to determine if there is a statistical association between body types and diet preferences, we will conduct a **Chi-squared** test again. The reason for selecting this test again is because it is effective for examining association between categorical variables. We already have filtered data frame 'diet_body_df' with required diet and body type preferences for our analysis. Using this data drame, we will create table 'diet_body_table' containing only those two variables. We will then run Chi-square test on that table.
+
+**Null Hypothesis**: There is no significant association between diet preference and body type among individuals.
+
+**Alternate Hypothesis**: There is significant association between diet preference and body type among individuals.
+
+**standard α** = 0.05
 
 ```{r}
 # Chi-square
