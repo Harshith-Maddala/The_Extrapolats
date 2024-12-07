@@ -384,5 +384,5 @@ When Chi-squared test applied once again used and applied on filtered data frame
 
 # REFERENCES
 
-1. Sindy R Sumter, Laura Vandenbosch, Dating gone mobile: Demographic and personality-based correlates of using smartphone-based dating applications among emerging adults.
+1. Sindy R Sumter, Laura Vandenbosch, Dating gone mobile: Demographic and personality-based correlates of using smartphone-based dating applications among emerging the adults.
 2. [W3 Schools](https://www.w3schools.com/r/r_graph_plot.asp)
