@@ -169,15 +169,6 @@ The P-value is greater than significance level(0.05). Therefore, we cannot rejec
 
 ### 4.2: Can we predict the Income of an individual based on their Age, Height, and RomanticGestureScore using a linear regression model?
 
-```{r, warning=FALSE}
-# scatter plots with regression lines for better insights
-ggplot(proposal_df, aes(x = Age, y = Income)) + geom_point(color = "blue") + geom_smooth(method = "lm", color = "red") + labs(title = "Age vs Income", x = "Age", y = "Income") + theme_minimal()
-
-ggplot(proposal_df, aes(x = Height, y = Income)) + geom_point(color = "green") + geom_smooth(method = "lm", color = "red") + labs(title = "Height vs Income", x = "Height", y = "Income") + theme_minimal()
-
-ggplot(proposal_df, aes(x = RomanticGestureScore, y = Income)) + geom_point(color = "purple") + geom_smooth(method = "lm", color = "red") + labs(title = "RomanticGestureScore vs Income", x = "Romantic Gesture Score", y = "Income") + theme_minimal()
-```
-
 ```{r}
 # linear regression model
 model_lr <- lm(Income ~ Age + Height + RomanticGestureScore, data = proposal_df)
