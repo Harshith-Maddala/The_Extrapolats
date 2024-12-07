@@ -421,6 +421,25 @@ varImpPlot(random_forest_model, main = "Variable Importance - Random Forest")
 ```
 
 ```{r}
+
+# Prediction 
+
+subject <- data.frame(   RomanticGestureScore = factor(10, levels = levels(proposal_df$RomanticGestureScore)),
+  CompatibilityScore = factor(7, levels = levels(proposal_df$CompatibilityScore)),
+  CommunicationScore = factor(3, levels = levels(proposal_df$CommunicationScore)), DistanceKM = 0, Height = 173, Income = 0, Age = 23)
+
+
+
+
+predicted_classes <- predict(random_forest_model, subject, type = "response")
+
+
+predicted_probabilities <- predict(random_forest_model, subject, type = "prob")
+
+
+cat("Predicted Class (0 or 1):\n")
+print(predicted_classes)
+
 ```
 
 ```{r}
