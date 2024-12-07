@@ -372,6 +372,13 @@ testData <- proposal_df[-trainIndex, ]
 # Random Forest Model
 random_forest_model <- randomForest(Response ~ RomanticGestureScore + CompatibilityScore + CommunicationScore + DistanceKM + Height + Income + Age, data = trainData, ntree = 500, mtry = 2, importance = TRUE)
 
+# Print model summary
+print(random_forest_model)
+
+# Predictions
+predicted_probabilities_rf <- predict(random_forest_model, proposal_df, type = "prob")[, 2]  # Probabilities for class 1
+predicted_classes_rf <- predict(random_forest_model, proposal_df, type = "response") # Predicted classes
+
 
 
 
