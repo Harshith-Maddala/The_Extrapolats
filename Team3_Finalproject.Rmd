@@ -1,30 +1,222 @@
 ---
 title: "Final Project"
-author: "Maddala Harshit"
+author: "Maddala Harshith"
 date: "`r Sys.Date()`"
-output: html_document
+output:
+  html_document:
+    code_folding: hide
+    number_sections: false
+    toc: yes
+    toc_depth: 3
+    toc_float: yes
+  pdf_document:
+    toc: yes
+    toc_depth: '3'
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+# Marriage Proposal Dataset Analysis - Code & Technical Analysis
+
+## STEP 1: Loading the Dataset
+
+```{r}
+# Reading the dataset
+proposal_df = read.csv("marriage_proposal.csv")
 ```
 
-## R Markdown
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+```{r}
+# Structure of the dataset
+str(proposal_df)
+```
+## STEP 2: Cleaning the dataset
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
+```{r}
+# Check for empty and NA values 
+empty_values <- sapply(proposal_df, function(x) sum(x == "", na.rm = TRUE))
+na_values <- sapply(proposal_df, function(x) sum(is.na(x)))
+print("Empty Values in Each Column:")
+print(empty_values)
+print("NA Values in Each Column:")
+print(na_values)
 ```
 
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
+```{r}
+# Converting required 'int' columns into 'factor'
+proposal_df$RomanticGestureScore <- as.factor(proposal_df$RomanticGestureScore)
+proposal_df$CompatibilityScore <- as.factor(proposal_df$CompatibilityScore)
+proposal_df$CommunicationScore <- as.factor(proposal_df$CommunicationScore)
+proposal_df$Response <- as.factor(proposal_df$Response)
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+```{r}
+print("Summary of cleaned data")
+summary(proposal_df)
+```
+## STEP 3: Exploratory Data Analysis
+
+### Loading necessary libraries
+
+```{r}
+# Load necessary libraries
+library(ggplot2)
+library(dplyr)
+library(psych)
+library(tidyverse) 
+library(ggplot2) 
+library(viridis) 
+library(RColorBrewer) 
+library(ggmosaic)
+```
+
+### Distribution of the Numeric variables
+
+Let’s take a look at descriptive stats of Numeric variables.
+```{r}
+# Descriptive Statistics
+# Numeric variables
+describe(proposal_df %>% select(Age, Height, Income, DistanceKM))
+```
+
+Graphical Representations of Integer variables.
+
+```{r}
+# Histogram of age
+ggplot(proposal_df, aes(x = Age, fill = Age)) + geom_histogram(binwidth = 5, fill = "blue", color = "black") + labs(title = "Age Distribution", x = "Age", y = "Frequency") + theme_minimal()
+```
+
+```{r}
+# Density plot for height
+ggplot(proposal_df, aes(x = Height)) + geom_density(color = "black", size = 1.2) + labs(title = "Height Distribution", x = "Height (cm)", y = "Density") + theme_minimal()
+```
+
+```{r}
+#proposal_df <- outlierKD2(proposal_df, DistanceKM, rm = TRUE, boxplt = TRUE, histogram = FALSE, qqplt = TRUE)
+```
+
+```{r}
+# Histogram for Income
+ggplot(proposal_df, aes(x = Income)) + geom_histogram(binwidth = 5000, fill = "green", color = "black") + labs(title = "Income Distribution", x = "Income (USD)", y = "Frequency") + theme_minimal()
+
+```
+```{r}
+# Boxplot for Distance
+ggplot(proposal_df, aes(y = DistanceKM)) + geom_boxplot(fill = "orange", color = "black") + labs(title = "Distance (KM) Boxplot", y = "Distance (KM)") + theme_minimal()
+```
+
+Graphical Representations of Factorial variables.
+
+```{r}
+# Pie chart for Response variable
+ggplot(proposal_df, aes(x = "", fill = Response)) + geom_bar(width = 1, stat = "count", color = "black") + coord_polar(theta = "y") + geom_text(aes(label = scales::percent(..count../sum(..count..))), position = position_stack(vjust = 0.5), stat = "count") + scale_fill_manual(values = c("0" = "red", "1" = "green"), labels = c("Rejected", "Accepted")) + labs(title = "Proposal Response Distribution", fill = "Response") + theme_void() + theme(plot.title = element_text(hjust = 0.5, size = 16))
+```
+
+```{r}
+library(gridExtra)
+
+# bar plot for CommunicationScore
+p1 <- ggplot(proposal_df, aes(x = as.factor(CommunicationScore))) + geom_bar(fill = "blue", color = "black") + labs(title = "Communication Score Distribution", x = "Communication Score", y = "Frequency") + theme_minimal()
+
+# bar plot for CompatibilityScore
+p2 <- ggplot(proposal_df, aes(x = as.factor(CompatibilityScore))) + geom_bar(fill = "green", color = "black") + labs(title = "Compatibility Score Distribution", x = "Compatibility Score", y = "Frequency") + theme_minimal()
+
+grid.arrange(p1, p2, ncol = 2)
+```
+
+
+## STEP 4: SMART Questions
+
+### 4.1: Is there a statistically significant difference in the Response variable (Proposal Accepted vs Rejected) based on the Income of the individual?
+```{r}
+# Income categories
+proposal_df$IncomeCategory <- cut(proposal_df$Income, breaks = c(10000, 20000, 30000, 40000), labels = c("Low Income", "Medium Income", "High Income"))
+
+# Plot bar chart 
+ggplot(proposal_df, aes(x = IncomeCategory, fill = factor(Response))) + geom_bar(position = "dodge") + labs(title = "Proposal Acceptance by Income Category", x = "Income Category", y = "Count", fill = "Proposal Response") + theme_minimal()
+```
+
+Null Hypothesis: There is no statistically significant difference in the Proposal Response based on an Individual's Income.
+Alternative Hypothesis: There is a statistically significant difference in the Proposal Response based on an Individual's Income.
+```{r}
+# Contingency table for Income Category and Proposal Response
+contingency_table <- table(proposal_df$IncomeCategory, proposal_df$Response)
+
+# Chi-Square Test
+chi_square_test <- chisq.test(contingency_table)
+chi_square_test
+```
+
+The P-value is greater than significance level(0.05). Therefore, we cannot reject the Null Hypothesis. There is no statistically significant difference in the Proposal Response based on an Individual's Income.
+
+### 4.2: Can we predict the Income of an individual based on their Age, Height, and RomanticGestureScore using a linear regression model?
+
+```{r}
+# Pairwise scatter plots with regression lines for better insights
+ggplot(proposal_df, aes(x = Age, y = Income)) + 
+  geom_point(color = "blue") + 
+  geom_smooth(method = "lm", color = "red") + 
+  labs(title = "Age vs Income", x = "Age", y = "Income") + 
+  theme_minimal()
+
+ggplot(proposal_df, aes(x = Height, y = Income)) + 
+  geom_point(color = "green") + 
+  geom_smooth(method = "lm", color = "red") + 
+  labs(title = "Height vs Income", x = "Height", y = "Income") + 
+  theme_minimal()
+
+ggplot(proposal_df, aes(x = RomanticGestureScore, y = Income)) + 
+  geom_point(color = "purple") + 
+  geom_smooth(method = "lm", color = "red") + 
+  labs(title = "RomanticGestureScore vs Income", x = "Romantic Gesture Score", y = "Income") + 
+  theme_minimal()
+```
+
+```{r}
+# Building the linear regression model
+model <- lm(Income ~ Age + Height + RomanticGestureScore, data = proposal_df)
+
+# Summary of the model
+summary(model)
+
+```
+
+```{r}
+# Evaluating model performance
+# R-squared value
+r_squared <- summary(model)$r.squared
+
+# Plotting residuals to check for any patterns
+ggplot(data.frame(residuals = residuals(model)), aes(x = residuals)) + 
+  geom_histogram(binwidth = 1000, fill = "blue", color = "black") + 
+  labs(title = "Residuals Distribution", x = "Residuals", y = "Frequency") + 
+  theme_minimal()
+
+# Print R-squared value
+print(paste("R-squared: ", r_squared))
+
+```
+
+### 4.3: Which classification model (logistic regression, decision tree, or random forest) is the most suitable for predicting whether a proposal will be accepted (Response = 1) or rejected (Response = 0) based on RomanticGestureScore, CompatibilityScore, and DistanceKM?
+
+```{r}
+```
+
+```{r}
+```
+
+```{r}
+```
+
+### 4.4: How does the inclusion of Income, RomanticGestureScore, and DistanceKM affect the accuracy and feature importance in predicting Response, using a Random Forest classifier?
+### How can we improve the accuracy of the Random Forest model predicting proposal acceptance by adding Income, Age, and DistanceKM as features? Which additional features could further enhance the model's performance, and how would the model accuracy change?
+
+```{r}
+```
+
+```{r}
+```
+
+```{r}
+```
+
+```{r}
+```
