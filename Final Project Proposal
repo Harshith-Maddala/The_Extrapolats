@@ -5,3 +5,5 @@ In this final project, we work on a dataset containing information about marriag
 We have a dataset with 10,000 observations and 9 columns such as height, age, income, romantic gesture scores, compatibility scores, communication scores, and physical distance between partners (in km). Through exploratory data analysis (EDA) and predictive modeling, we aim to uncover patterns and relationships that influence proposal outcomes.
 
 SMART Questions:
+
+1. Are romantic gesture scores more influential in certain age categories compared to others?
