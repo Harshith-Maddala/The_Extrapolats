@@ -117,7 +117,6 @@ ggplot(proposal_df, aes(x = Height)) + geom_density(color = "black", size = 1.2)
 ```{r}
 # Histogram for Income
 ggplot(proposal_df, aes(x = Income)) + geom_histogram(binwidth = 5000, fill = "green", color = "black") + labs(title = "Income Distribution", x = "Income (USD)", y = "Frequency") + theme_minimal()
-
 ```
 ```{r}
 # Boxplot for Distance
@@ -132,7 +131,6 @@ ggplot(proposal_df, aes(x = "", fill = Response)) + geom_bar(width = 1, stat = "
 ```
 
 ```{r}
-
 # bar plot for CommunicationScore
 p1 <- ggplot(proposal_df, aes(x = as.factor(CommunicationScore))) + geom_bar(fill = "blue", color = "black") + labs(title = "Communication Score Distribution", x = "Communication Score", y = "Frequency") + theme_minimal()
 
@@ -147,10 +145,10 @@ grid.arrange(p1, p2, ncol = 2)
 
 ### 4.1: Is there a statistically significant difference in the Response variable (Proposal Accepted vs Rejected) based on the Income of the individual?
 ```{r}
-# Income categories
-proposal_df$IncomeCategory <- cut(proposal_df$Income, breaks = c(10000, 20000, 30000, 40000), labels = c("Low Income", "Medium Income", "High Income"))
+# Filtering the required data
+proposal_df$IncomeCategory <- cut(proposal_df$Income, breaks = c(5000, 20000, 30000, 40000, 50000), labels = c("Low Income", "Medium Income", "High Income", "Very High Income"), include.lowest = TRUE)
 
-# Plot bar chart 
+# bar chart
 ggplot(proposal_df, aes(x = IncomeCategory, fill = factor(Response))) + geom_bar(position = "dodge") + labs(title = "Proposal Acceptance by Income Category", x = "Income Category", y = "Count", fill = "Proposal Response") + theme_minimal()
 ```
 
