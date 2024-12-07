@@ -313,9 +313,12 @@ text(0.6, 0.2, auc_text_tree, col = "green", cex = 1.2)
 ```{r, echo=FALSE}
 # Set seed for reproducibility
 set.seed(123)
+trainIndex <- createDataPartition(proposal_df$Response, p = 0.8, list = FALSE)
+trainData <- proposal_df[trainIndex, ]
+testData <- proposal_df[-trainIndex, ]
 
 # Random Forest Model
-random_forest_model <- randomForest(Response ~ RomanticGestureScore + CompatibilityScore + DistanceKM, data = proposal_df, ntree = 500, mtry = 2, importance = TRUE)
+random_forest_model <- randomForest(Response ~ RomanticGestureScore + CompatibilityScore + DistanceKM, data = trainData, ntree = 500, mtry = 2, importance = TRUE)
 
 # Print model summary
 print(random_forest_model)
