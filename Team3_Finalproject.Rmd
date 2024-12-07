@@ -377,7 +377,23 @@ print(random_forest_model)
 
 # Predictions
 predicted_probabilities_rf <- predict(random_forest_model, proposal_df, type = "prob")[, 2]  # Probabilities for class 1
-predicted_classes_rf <- predict(random_forest_model, proposal_df, type = "response") # Predicted classes
+predicted_classes_rf <- predict(random_forest_model, proposal_df, type = "response")# Predicted classes
+
+# Convert actual values to factor
+actual <- as.factor(proposal_df$Response)
+
+# Confusion Matrix
+confusion_rf <- confusionMatrix(as.factor(predicted_classes_rf), actual, positive = "1")
+
+# Accuracy, Precision, Recall, F1-score
+accuracy_rf <- confusion_rf$overall["Accuracy"]
+precision_rf <- confusion_rf$byClass["Pos Pred Value"]  # Precision
+recall_rf <- confusion_rf$byClass["Sensitivity"]        # Recall
+f1_score_rf <- 2 * (precision_rf * recall_rf) / (precision_rf + recall_rf)
+
+# AUC and ROC Curve
+roc_curve_rf <- roc(actual, predicted_probabilities_rf, levels = c("0", "1"))
+auc_value_rf <- auc(roc_curve_rf)
 
 
 
