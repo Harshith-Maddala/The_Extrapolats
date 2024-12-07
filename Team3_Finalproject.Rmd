@@ -396,6 +396,23 @@ roc_curve_rf <- roc(actual, predicted_probabilities_rf, levels = c("0", "1"))
 auc_value_rf <- auc(roc_curve_rf)
 
 
+# Print Metrics
+cat("Random Forest Metrics:\n")
+cat("Accuracy:", round(accuracy_rf, 3), "\n")
+cat("Precision:", round(precision_rf, 3), "\n")
+cat("Recall:", round(recall_rf, 3), "\n")
+cat("F1-Score:", round(f1_score_rf, 3), "\n")
+cat("AUC:", round(auc_value_rf, 3), "\n")
+
+# Plot ROC Curve with AUC value
+plot(roc_curve_rf, main = "ROC Curve for Random Forest", col = "blue", lwd = 2)
+abline(a = 0, b = 1, col = "gray", lty = 2)
+
+# Add AUC value to the plot
+auc_text_rf <- paste("AUC =", round(auc_value_rf, 3))
+text(0.6, 0.2, auc_text_rf, col = "blue", cex = 1.2)
+
+
 
 
 ```
