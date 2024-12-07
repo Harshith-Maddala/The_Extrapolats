@@ -8,3 +8,4 @@ SMART Questions:
 
 1. Are romantic gesture scores more influential in certain age categories compared to others?
 2. What combination of factors shows the strongest prediction power for proposal success?
+3. Which machine learning algorithms (Logistic Regression, Random Forest, or XGBoost) perform best in predicting proposal acceptance?
