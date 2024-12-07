@@ -7,3 +7,4 @@ We have a dataset with 10,000 observations and 9 columns such as height, age, in
 SMART Questions:
 
 1. Are romantic gesture scores more influential in certain age categories compared to others?
+2. What combination of factors shows the strongest prediction power for proposal success?
