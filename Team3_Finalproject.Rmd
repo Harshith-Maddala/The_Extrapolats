@@ -264,10 +264,13 @@ text(0.6, 0.2, auc_text, col = "blue", cex = 1.2)
 
 # Set seed for reproducibility
 set.seed(123)
+trainIndex <- createDataPartition(proposal_df$Response, p = 0.8, list = FALSE)
+trainData <- proposal_df[trainIndex, ]
+testData <- proposal_df[-trainIndex, ]
 
 # Decision Tree Model
 decision_tree_model <- rpart(Response ~ RomanticGestureScore + CompatibilityScore + DistanceKM, 
-                             data = proposal_df, method = "class")
+                             data = trainData, method = "class")
 
 # Visualize the Decision Tree
 rpart.plot(decision_tree_model, type = 2, extra = 104, main = "Decision Tree")
