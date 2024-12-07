@@ -80,6 +80,13 @@ library(ggplot2)
 library(viridis) 
 library(RColorBrewer) 
 library(ggmosaic)
+
+library(gridExtra)
+library(caret)
+library(pROC)
+library(rpart)
+library(rpart.plot)
+library(randomForest)
 ```
 
 ### Distribution of the Numeric variables
@@ -98,7 +105,7 @@ Graphical Representations of Integer variables.
 ggplot(proposal_df, aes(x = Age, fill = Age)) + geom_histogram(binwidth = 5, fill = "blue", color = "black") + labs(title = "Age Distribution", x = "Age", y = "Frequency") + theme_minimal()
 ```
 
-```{r}
+```{r, warning=FALSE}
 # Density plot for height
 ggplot(proposal_df, aes(x = Height)) + geom_density(color = "black", size = 1.2) + labs(title = "Height Distribution", x = "Height (cm)", y = "Density") + theme_minimal()
 ```
@@ -119,13 +126,12 @@ ggplot(proposal_df, aes(y = DistanceKM)) + geom_boxplot(fill = "orange", color =
 
 Graphical Representations of Factorial variables.
 
-```{r}
+```{r, warning=FALSE}
 # Pie chart for Response variable
 ggplot(proposal_df, aes(x = "", fill = Response)) + geom_bar(width = 1, stat = "count", color = "black") + coord_polar(theta = "y") + geom_text(aes(label = scales::percent(..count../sum(..count..))), position = position_stack(vjust = 0.5), stat = "count") + scale_fill_manual(values = c("0" = "red", "1" = "green"), labels = c("Rejected", "Accepted")) + labs(title = "Proposal Response Distribution", fill = "Response") + theme_void() + theme(plot.title = element_text(hjust = 0.5, size = 16))
 ```
 
 ```{r}
-library(gridExtra)
 
 # bar plot for CommunicationScore
 p1 <- ggplot(proposal_df, aes(x = as.factor(CommunicationScore))) + geom_bar(fill = "blue", color = "black") + labs(title = "Communication Score Distribution", x = "Communication Score", y = "Frequency") + theme_minimal()
@@ -163,7 +169,7 @@ The P-value is greater than significance level(0.05). Therefore, we cannot rejec
 
 ### 4.2: Can we predict the Income of an individual based on their Age, Height, and RomanticGestureScore using a linear regression model?
 
-```{r}
+```{r, warning=FALSE}
 # scatter plots with regression lines for better insights
 ggplot(proposal_df, aes(x = Age, y = Income)) + geom_point(color = "blue") + geom_smooth(method = "lm", color = "red") + labs(title = "Age vs Income", x = "Age", y = "Income") + theme_minimal()
 
@@ -209,10 +215,9 @@ predict1
 
 ### 4.3: Which classification model (logistic regression, decision tree, or random forest) is the most suitable for predicting whether a proposal will be accepted or rejected based on RomanticGestureScore, CompatibilityScore, and DistanceKM?
 
-```{r}
+#### Logistic Regression Model
+```{r, warning=FALSE}
 # Load required libraries
-library(caret)
-library(pROC)
 
 # Split the dataset into training and testing sets (Assuming proposal_df is your data)
 set.seed(123)  
@@ -260,13 +265,11 @@ abline(a = 0, b = 1, col = "gray", lty = 2)
 auc_text <- paste("AUC =", round(auc_value, 3))
 text(0.6, 0.2, auc_text, col = "blue", cex = 1.2)
 ```
+#### Desicion Tree Model
 
 ```{r}
 # Load required libraries
-library(rpart)
-library(rpart.plot)
-library(pROC)
-library(caret)
+
 
 # Set seed for reproducibility
 set.seed(123)
@@ -315,13 +318,8 @@ auc_text_tree <- paste("AUC =", round(auc_value_tree, 3))
 text(0.6, 0.2, auc_text_tree, col = "green", cex = 1.2)
 
 ```
-
+#### Random Forest Model
 ```{r, echo=FALSE}
-# Load required libraries
-library(randomForest)
-library(pROC)
-library(caret)
-
 # Set seed for reproducibility
 set.seed(123)
 
@@ -350,9 +348,6 @@ f1_score_rf <- 2 * (precision_rf * recall_rf) / (precision_rf + recall_rf)
 # AUC and ROC Curve
 roc_curve_rf <- roc(actual, predicted_probabilities_rf, levels = c("0", "1"))
 auc_value_rf <- auc(roc_curve_rf)
-```
-
-```{r}
 
 # Print Metrics
 cat("Random Forest Metrics:\n")
