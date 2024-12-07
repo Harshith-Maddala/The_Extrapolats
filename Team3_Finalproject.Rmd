@@ -422,7 +422,7 @@ varImpPlot(random_forest_model, main = "Variable Importance - Random Forest")
 
 ```{r}
 
-# Prediction 
+# Prediction model 
 
 subject <- data.frame(   RomanticGestureScore = factor(10, levels = levels(proposal_df$RomanticGestureScore)),
   CompatibilityScore = factor(7, levels = levels(proposal_df$CompatibilityScore)),
