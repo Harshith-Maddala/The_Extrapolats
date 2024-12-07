@@ -364,6 +364,16 @@ varImpPlot(random_forest_model, main = "Variable Importance - Random Forest")
 ### 4.4: How can we improve the accuracy of the Random Forest model predicting proposal acceptance by adding Income, Age, and DistanceKM as features? Which additional features could further enhance the model's performance, and how would the model accuracy change?
 
 ```{r}
+set.seed(123)
+trainIndex <- createDataPartition(proposal_df$Response, p = 0.8, list = FALSE)
+trainData <- proposal_df[trainIndex, ]
+testData <- proposal_df[-trainIndex, ]
+
+# Random Forest Model
+random_forest_model <- randomForest(Response ~ RomanticGestureScore + CompatibilityScore + CommunicationScore + DistanceKM + Height + Income + Age, data = trainData, ntree = 500, mtry = 2, importance = TRUE)
+
+
+
 
 ```
 
