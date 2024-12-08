@@ -205,7 +205,7 @@ plot(model_lr)
 We will now try to predict income of an individual who are 30 years old and 160 cm tall with a score of 8 for Romantic Gesture.
 
 ```{r}
-# Sample input  
+# Sample input data 
 input1 <- data.frame(Age = 30, Height = 160, RomanticGestureScore = factor(8, levels = levels(proposal_df$RomanticGestureScore)))
 
 #Prediction
