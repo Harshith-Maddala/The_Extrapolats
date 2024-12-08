@@ -214,7 +214,7 @@ predict1
 ```
 The Linear Regression Model has predicted the income of such individual mentioned above to be $26637.
 
-### 4.3: Which classification model (logistic regression, decision tree, or random forest) is the most suitable for predicting whether a proposal will be accepted or rejected based on features RomanticGestureScore, CompatibilityScore, and DistanceKM?
+### 4.3: Which classification model (logistic regression, decision tree, or random forest) is the most suitable for predicting whether a proposal will be accepted or rejected based on Relational(RomanticGestureScore, CompatibilityScore, and DistanceKM) features? 
 
 #### Logistic Regression Model
 ```{r, warning=FALSE}
