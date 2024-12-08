@@ -145,19 +145,29 @@ grid.arrange(p1, p2, ncol = 2)
 
 ### 4.1: Is there a statistically significant difference in the Response variable (Proposal Accepted vs Rejected) based on the Income of the individual?
 ```{r}
-# Filtering the required data
-proposal_df$IncomeCategory <- cut(proposal_df$Income, breaks = c(5000, 20000, 30000, 40000, 50000), labels = c("Low Income", "Medium Income", "High Income", "Very High Income"), include.lowest = TRUE)
-
-# bar chart
-ggplot(proposal_df, aes(x = IncomeCategory, fill = factor(Response))) + geom_bar(position = "dodge") + labs(title = "Proposal Acceptance by Income Category", x = "Income Category", y = "Count", fill = "Proposal Response") + theme_minimal()
+ggplot(proposal_df, aes(x = cut(Income, breaks = c(5000, 20000, 30000, 40000, 50000), 
+                        labels = c("Low Income", "Medium Income", "High Income", "Very High Income"), 
+                        include.lowest = TRUE), 
+                       fill = factor(Response))) + 
+  geom_bar(position = "dodge") + 
+  labs(title = "Proposal Acceptance by Income Category", 
+       x = "Income Category", 
+       y = "Count", 
+       fill = "Proposal Response") + 
+  theme_minimal()
 ```
 The graph appears consistent across the four classified income categories, with the majority of individuals falling into the Low-Income category.
 
 Null Hypothesis: There is no statistically significant difference in the Proposal Response based on an Individual's Income.
 Alternative Hypothesis: There is a statistically significant difference in the Proposal Response based on an Individual's Income.
+
 ```{r}
 # Contingency table for Income Category and Proposal Response
-contingency_table <- table(proposal_df$IncomeCategory, proposal_df$Response)
+contingency_table <- table(cut(proposal_df$Income, 
+                               breaks = c(5000, 20000, 30000, 40000, 50000), 
+                               labels = c("Low Income", "Medium Income", "High Income", "Very High Income"), 
+                               include.lowest = TRUE), 
+                           proposal_df$Response)
 
 # Chi-Square Test
 chi_square_test <- chisq.test(contingency_table)
@@ -347,7 +357,7 @@ trainData <- proposal_df[trainIndex, ]
 testData <- proposal_df[-trainIndex, ]
 
 # Random Forest Model
-random_forest_model <- randomForest(Response ~ Height + Income + Age, data = trainData, ntree = 500, mtry = 2, importance = TRUE)
+random_forest_model <- randomForest(Response ~ Height + Income + Age + DistanceKM, data = trainData, ntree = 500, mtry = 2, importance = TRUE)
 print(random_forest_model)
 predicted_probabilities_rf <- predict(random_forest_model, proposal_df, type = "prob")[, 2]  # Probabilities for class 1
 predicted_classes_rf <- predict(random_forest_model, proposal_df, type = "response")# Predicted classes
@@ -382,24 +392,28 @@ varImpPlot(random_forest_model, main = "Variable Importance - Random Forest")
 ```
 
 ```{r}
-
 # Prediction model 
 
-subject <- data.frame(   RomanticGestureScore = factor(10, levels = levels(proposal_df$RomanticGestureScore)),
-  CompatibilityScore = factor(7, levels = levels(proposal_df$CompatibilityScore)),
-  CommunicationScore = factor(3, levels = levels(proposal_df$CommunicationScore)), DistanceKM = 0, Height = 173, Income = 0, Age = 23)
-
-
-
+subject <- data.frame(   RomanticGestureScore = factor(10, levels = levels(proposal_df$RomanticGestureScore)), CompatibilityScore = factor(7, levels = levels(proposal_df$CompatibilityScore)), CommunicationScore = factor(3, levels = levels(proposal_df$CommunicationScore)), DistanceKM = 0, Height = 173, Income = 0, Age = 23)
 
 predicted_classes <- predict(random_forest_model, subject, type = "response")
 
-
 predicted_probabilities <- predict(random_forest_model, subject, type = "prob")
-
 
 cat("Predicted Class (0 or 1):\n")
 print(predicted_classes)
+```
+
+```{r}
+# Train a random forest model
+library(randomForest)
+rf_model <- randomForest(Response ~ ., data = proposal_df)
+
+# View feature importance
+importance(rf_model)
+
+# Plot feature importance
+varImpPlot(rf_model)
 
 ```
 
@@ -407,4 +421,18 @@ print(predicted_classes)
 ```
 
 ```{r}
+# For all 7 Features
+#Random Forest Metrics:
+#Accuracy: 0.958 
+#Precision: 0.955 
+#Recall: 0.992 
+#F1-Score: 0.973 
+#AUC: 0.985 
+
+# For all 6 selected Features
+#Accuracy: 0.959 
+#Precision: 0.959 
+#Recall: 0.989 
+#F1-Score: 0.974 
+#AUC: 0.984 
 ```
