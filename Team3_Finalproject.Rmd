@@ -346,7 +346,11 @@ varImpPlot(random_forest_model, main = "Variable Importance - Random Forest")
 
 ```
 
+<<<<<<< HEAD
 ### 4.4: Can we enhance the accuracy of a random forest model in predicting the proposal acceptance using Age, Height, Income and Distance features ? Adding / Dropping which features might further improve the model’s accuracy change as a result?
+=======
+### 4.4: How can we enhance the accuracy of a Random Forest model in predicting proposal acceptance using features like Income, Age, and DistanceKM? Adding/Dropping what other features might further improve the model's performance, and how would the model's accuracy change as a result?
+>>>>>>> 48f347d31e02e507adc9733b13d22fd9090260d4
 
 ```{r}
 # Split the dataset into training and testing sets 
