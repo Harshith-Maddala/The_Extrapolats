@@ -151,6 +151,7 @@ proposal_df$IncomeCategory <- cut(proposal_df$Income, breaks = c(5000, 20000, 30
 # bar chart
 ggplot(proposal_df, aes(x = IncomeCategory, fill = factor(Response))) + geom_bar(position = "dodge") + labs(title = "Proposal Acceptance by Income Category", x = "Income Category", y = "Count", fill = "Proposal Response") + theme_minimal()
 ```
+The graph appears consistent across the four classified income categories, with the majority of individuals falling into the Low-Income category.
 
 Null Hypothesis: There is no statistically significant difference in the Proposal Response based on an Individual's Income.
 Alternative Hypothesis: There is a statistically significant difference in the Proposal Response based on an Individual's Income.
@@ -165,7 +166,7 @@ chi_square_test
 
 The P-value is greater than significance level(0.05). Therefore, we cannot reject the Null Hypothesis. There is no statistically significant difference in the Proposal Response based on an Individual's Income.
 
-### 4.2: Can we predict the Income of an individual based on their Age, Height, and RomanticGestureScore using a linear regression model?
+### 4.2: Can a linear regression model effectively predict the Income of an individual using Age, Height, and RomanticGestureScore as predictors?
 
 ```{r}
 # linear regression model
@@ -187,11 +188,11 @@ cat("Mean Squared Error:", mse, "\n")
 
 ```{r}
 # Plot diagnostic plots
-par(mfrow = c(2, 2)) # Arrange plots in a 2x2 grid
+par(mfrow = c(2, 2))
 plot(model_lr)
 ```
 
-
+We will now try to predict income of an individual who are 30 years old and 160 cm tall with a score of 8 for Romantic Gesture.
 
 ```{r}
 # Sample input data 
@@ -201,39 +202,31 @@ input1 <- data.frame(Age = 30, Height = 160, RomanticGestureScore = factor(8, le
 predict1 <- predict(model_lr, newdata = input1)
 predict1
 ```
+The Linear Regression Model has predicted the income of such individual mentioned above to be $26637.
 
-### 4.3: Which classification model (logistic regression, decision tree, or random forest) is the most suitable for predicting whether a proposal will be accepted or rejected based on RomanticGestureScore, CompatibilityScore, and DistanceKM?
+### 4.3: Which classification model (logistic regression, decision tree, or random forest) is the most suitable for predicting whether a proposal will be accepted or rejected based on features RomanticGestureScore, CompatibilityScore, and DistanceKM?
 
 #### Logistic Regression Model
 ```{r, warning=FALSE}
-# Load required libraries
-
-# Split the dataset into training and testing sets (Assuming proposal_df is your data)
+# Split the dataset into training and testing sets 
 set.seed(123)  
 index <- createDataPartition(proposal_df$Response, p = 0.8, list = FALSE)
 train_data <- proposal_df[index, ]
 test_data <- proposal_df[-index, ]
 
 # Logistic Regression Model
-logistic_model <- glm(Response ~ RomanticGestureScore + CompatibilityScore + DistanceKM, data = train_data, family = binomial)
-
-# Predictions on test data
+logistic_model <- glm(Response ~ RomanticGestureScore + CompatibilityScore + CommunicationScore, data = train_data, family = binomial)
 logistic_probabilities <- predict(logistic_model, test_data, type = "response")
 logistic_predicted <- ifelse(logistic_probabilities > 0.5, 1, 0)
-
-# Convert predictions and actuals to factors
 actual <- as.factor(test_data$Response)
 predicted <- as.factor(logistic_predicted)
 
-# Confusion Matrix
+# Confusion Matrix and metrics
 confusion <- confusionMatrix(predicted, actual, positive = "1")
-
-# Accuracy, Precision, Recall, F1-score
 accuracy <- confusion$overall["Accuracy"]
-precision <- confusion$byClass["Pos Pred Value"]  # Precision
-recall <- confusion$byClass["Sensitivity"]       # Recall
+precision <- confusion$byClass["Pos Pred Value"]  
+recall <- confusion$byClass["Sensitivity"]       
 f1_score <- 2 * (precision * recall) / (precision + recall)
-
 # AUC
 roc_curve <- roc(actual, logistic_probabilities, levels = c("0", "1"))
 auc_value <- auc(roc_curve)
@@ -246,50 +239,37 @@ cat("Recall: ", recall, "\n")
 cat("F1-Score: ", f1_score, "\n")
 cat("AUC: ", auc_value, "\n")
 
-# Plot ROC Curve with AUC value
+# Plot ROC Curve 
 plot(roc_curve, main = "ROC Curve for Logistic Regression", col = "blue", lwd = 2)
 abline(a = 0, b = 1, col = "gray", lty = 2)
-
-# Add AUC value to the plot
-auc_text <- paste("AUC =", round(auc_value, 3))
+auc_text <- paste("AUC =", round(auc_value, 3)) # Add AUC value to the plot
 text(0.6, 0.2, auc_text, col = "blue", cex = 1.2)
 ```
 #### Desicion Tree Model
 
-```{r}
-# Load required libraries
+```{r, warning=FALSE}
 
-
-# Set seed for reproducibility
+# Split the dataset into training and testing sets 
 set.seed(123)
 trainIndex <- createDataPartition(proposal_df$Response, p = 0.8, list = FALSE)
 trainData <- proposal_df[trainIndex, ]
 testData <- proposal_df[-trainIndex, ]
 
 # Decision Tree Model
-decision_tree_model <- rpart(Response ~ RomanticGestureScore + CompatibilityScore + DistanceKM, 
-                             data = trainData, method = "class")
+decision_tree_model <- rpart(Response ~ RomanticGestureScore + CompatibilityScore + CommunicationScore, data = trainData, method = "class")
+predicted_probabilities_tree <- predict(decision_tree_model, proposal_df, type = "prob")[, 2]  
+predicted_classes_tree <- predict(decision_tree_model, proposal_df, type = "class")            
+actual <- as.factor(proposal_df$Response)
 
 # Visualize the Decision Tree
 rpart.plot(decision_tree_model, type = 2, extra = 104, main = "Decision Tree")
 
-# Predictions
-predicted_probabilities_tree <- predict(decision_tree_model, proposal_df, type = "prob")[, 2]  # Probabilities for class 1
-predicted_classes_tree <- predict(decision_tree_model, proposal_df, type = "class")            # Predicted classes
-
-# Convert actual values to factor
-actual <- as.factor(proposal_df$Response)
-
-# Confusion Matrix
+# Confusion Matrix and metrics
 confusion_tree <- confusionMatrix(as.factor(predicted_classes_tree), actual, positive = "1")
-
-# Accuracy, Precision, Recall, F1-score
 accuracy_tree <- confusion_tree$overall["Accuracy"]
-precision_tree <- confusion_tree$byClass["Pos Pred Value"]  # Precision
-recall_tree <- confusion_tree$byClass["Sensitivity"]        # Recall
+precision_tree <- confusion_tree$byClass["Pos Pred Value"]  
+recall_tree <- confusion_tree$byClass["Sensitivity"]        
 f1_score_tree <- 2 * (precision_tree * recall_tree) / (precision_tree + recall_tree)
-
-# AUC and ROC Curve
 roc_curve_tree <- roc(actual, predicted_probabilities_tree, levels = c("0", "1"))
 auc_value_tree <- auc(roc_curve_tree)
 
@@ -301,46 +281,39 @@ cat("Recall:", round(recall_tree, 3), "\n")
 cat("F1-Score:", round(f1_score_tree, 3), "\n")
 cat("AUC:", round(auc_value_tree, 3), "\n")
 
-# Plot ROC Curve with AUC value
+# Plot ROC Curve 
 plot(roc_curve_tree, main = "ROC Curve for Decision Tree", col = "green", lwd = 2)
 abline(a = 0, b = 1, col = "gray", lty = 2)
-
-# Add AUC value to the plot
-auc_text_tree <- paste("AUC =", round(auc_value_tree, 3))
+auc_text_tree <- paste("AUC =", round(auc_value_tree, 3)) # Add AUC value to the plot
 text(0.6, 0.2, auc_text_tree, col = "green", cex = 1.2)
 
 ```
 #### Random Forest Model
-```{r, echo=FALSE}
-# Set seed for reproducibility
+```{r, echo=FALSE,  warning=FALSE}
+
+# Split the dataset into training and testing sets 
 set.seed(123)
 trainIndex <- createDataPartition(proposal_df$Response, p = 0.8, list = FALSE)
 trainData <- proposal_df[trainIndex, ]
 testData <- proposal_df[-trainIndex, ]
 
 # Random Forest Model
-random_forest_model <- randomForest(Response ~ RomanticGestureScore + CompatibilityScore + DistanceKM, data = trainData, ntree = 500, mtry = 2, importance = TRUE)
+random_forest_model <- randomForest(Response ~ RomanticGestureScore + CompatibilityScore + CommunicationScore, data = trainData, ntree = 500, mtry = 2, importance = TRUE)
 
 # Print model summary
-print(random_forest_model)
+# print(random_forest_model)
 
 # Predictions
 predicted_probabilities_rf <- predict(random_forest_model, proposal_df, type = "prob")[, 2]  # Probabilities for class 1
 predicted_classes_rf <- predict(random_forest_model, proposal_df, type = "response")         # Predicted classes
-
-# Convert actual values to factor
 actual <- as.factor(proposal_df$Response)
 
-# Confusion Matrix
+# Confusion Matrix and metrics
 confusion_rf <- confusionMatrix(as.factor(predicted_classes_rf), actual, positive = "1")
-
-# Accuracy, Precision, Recall, F1-score
 accuracy_rf <- confusion_rf$overall["Accuracy"]
-precision_rf <- confusion_rf$byClass["Pos Pred Value"]  # Precision
-recall_rf <- confusion_rf$byClass["Sensitivity"]        # Recall
+precision_rf <- confusion_rf$byClass["Pos Pred Value"]  
+recall_rf <- confusion_rf$byClass["Sensitivity"]        
 f1_score_rf <- 2 * (precision_rf * recall_rf) / (precision_rf + recall_rf)
-
-# AUC and ROC Curve
 roc_curve_rf <- roc(actual, predicted_probabilities_rf, levels = c("0", "1"))
 auc_value_rf <- auc(roc_curve_rf)
 
@@ -352,12 +325,10 @@ cat("Recall:", round(recall_rf, 3), "\n")
 cat("F1-Score:", round(f1_score_rf, 3), "\n")
 cat("AUC:", round(auc_value_rf, 3), "\n")
 
-# Plot ROC Curve with AUC value
+# Plot ROC Curve 
 plot(roc_curve_rf, main = "ROC Curve for Random Forest", col = "blue", lwd = 2)
 abline(a = 0, b = 1, col = "gray", lty = 2)
-
-# Add AUC value to the plot
-auc_text_rf <- paste("AUC =", round(auc_value_rf, 3))
+auc_text_rf <- paste("AUC =", round(auc_value_rf, 3)) # Add AUC value to the plot
 text(0.6, 0.2, auc_text_rf, col = "blue", cex = 1.2)
 
 # Variable Importance Plot
@@ -368,34 +339,26 @@ varImpPlot(random_forest_model, main = "Variable Importance - Random Forest")
 ### 4.4: How can we improve the accuracy of the Random Forest model predicting proposal acceptance by adding Income, Age, and DistanceKM as features? Which additional features could further enhance the model's performance, and how would the model accuracy change?
 
 ```{r}
+# Split the dataset into training and testing sets 
+
 set.seed(123)
 trainIndex <- createDataPartition(proposal_df$Response, p = 0.8, list = FALSE)
 trainData <- proposal_df[trainIndex, ]
 testData <- proposal_df[-trainIndex, ]
 
 # Random Forest Model
-random_forest_model <- randomForest(Response ~ RomanticGestureScore + CompatibilityScore + CommunicationScore + DistanceKM + Height + Income + Age, data = trainData, ntree = 500, mtry = 2, importance = TRUE)
-
-# Print model summary
+random_forest_model <- randomForest(Response ~ Height + Income + Age, data = trainData, ntree = 500, mtry = 2, importance = TRUE)
 print(random_forest_model)
-
-# Predictions
 predicted_probabilities_rf <- predict(random_forest_model, proposal_df, type = "prob")[, 2]  # Probabilities for class 1
 predicted_classes_rf <- predict(random_forest_model, proposal_df, type = "response")# Predicted classes
-
-# Convert actual values to factor
 actual <- as.factor(proposal_df$Response)
 
-# Confusion Matrix
+# Confusion Matrix and metrics
 confusion_rf <- confusionMatrix(as.factor(predicted_classes_rf), actual, positive = "1")
-
-# Accuracy, Precision, Recall, F1-score
 accuracy_rf <- confusion_rf$overall["Accuracy"]
-precision_rf <- confusion_rf$byClass["Pos Pred Value"]  # Precision
-recall_rf <- confusion_rf$byClass["Sensitivity"]        # Recall
+precision_rf <- confusion_rf$byClass["Pos Pred Value"]  
+recall_rf <- confusion_rf$byClass["Sensitivity"]        
 f1_score_rf <- 2 * (precision_rf * recall_rf) / (precision_rf + recall_rf)
-
-# AUC and ROC Curve
 roc_curve_rf <- roc(actual, predicted_probabilities_rf, levels = c("0", "1"))
 auc_value_rf <- auc(roc_curve_rf)
 
@@ -408,20 +371,14 @@ cat("Recall:", round(recall_rf, 3), "\n")
 cat("F1-Score:", round(f1_score_rf, 3), "\n")
 cat("AUC:", round(auc_value_rf, 3), "\n")
 
-# Plot ROC Curve with AUC value
+# Plot ROC Curve
 plot(roc_curve_rf, main = "ROC Curve for Random Forest", col = "blue", lwd = 2)
 abline(a = 0, b = 1, col = "gray", lty = 2)
-
-# Add AUC value to the plot
-auc_text_rf <- paste("AUC =", round(auc_value_rf, 3))
+auc_text_rf <- paste("AUC =", round(auc_value_rf, 3)) # Add AUC value to the plot
 text(0.6, 0.2, auc_text_rf, col = "blue", cex = 1.2)
 
 # Variable Importance Plot
 varImpPlot(random_forest_model, main = "Variable Importance - Random Forest")
-
-
-
-
 ```
 
 ```{r}
