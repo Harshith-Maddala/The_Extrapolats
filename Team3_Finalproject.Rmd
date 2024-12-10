@@ -54,7 +54,7 @@ print("NA Values in Each Column:")
 print(na_values)
 ```
 
-No Null values were identified so we move on to the Factorization of few required variables.
+No Null values were identified so we move on to the Factorization of few integer variables.
 ```{r}
 # Converting required 'int' columns into 'factor'
 proposal_df$RomanticGestureScore <- as.factor(proposal_df$RomanticGestureScore)
@@ -459,3 +459,5 @@ predicted_probabilities <- predict(random_forest_model, subject, type = "prob")
 cat("Predicted Class (0 or 1):\n")
 print(predicted_classes)
 ```
+
+The Model Predicts the outcome to be 'Yes'(1).
