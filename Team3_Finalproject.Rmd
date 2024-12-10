@@ -393,9 +393,6 @@ text(0.6, 0.2, auc_text_rf, col = "blue", cex = 1.2)
 
 ```
 
-```{r}
-```
-
 We consider all variables here to obtain the Mean Decrease Gini Scores of each variable
 ```{r}
 # Train a random forest model for comparision
