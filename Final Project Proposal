@@ -10,3 +10,8 @@ SMART Questions:
 2. What combination of factors shows the strongest prediction power for proposal success?
 3. Which machine learning algorithms (Logistic Regression, Random Forest, or Decision Tree) perform best in predicting proposal acceptance?
 4. How can we improve the accuracy of the Random Forest model predicting proposal acceptance by adding Income, Age, and DistanceKM as features? Which additional features could further enhance the model's performance, and how would the model accuracy change?
+
+
+Dataset Source : 
+
+GitHub repo :
