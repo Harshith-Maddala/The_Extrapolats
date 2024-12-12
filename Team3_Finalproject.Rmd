@@ -175,7 +175,6 @@ chi_square_test <- chisq.test(contingency_table)
 chi_square_test
 ```
 
-The P-value is greater than significance level(0.05). Therefore, we cannot reject the Null Hypothesis. There is no statistically significant difference in the Proposal Response based on an Individual's Income.
 
 ### 4.2: Can a linear regression model effectively predict the Income of an individual using Age, Height, and RomanticGestureScore as predictors?
 
@@ -209,7 +208,6 @@ We will now try to predict income of an individual who are 30 years old and 160 
 # Sample input data 
 input1 <- data.frame(Age = 30, Height = 160, RomanticGestureScore = factor(8, levels = levels(proposal_df$RomanticGestureScore)))
 
-#Prediction
 predict1 <- predict(model_lr, newdata = input1)
 predict1
 ```
