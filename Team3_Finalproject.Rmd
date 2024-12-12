@@ -448,7 +448,7 @@ varImpPlot(random_forest_model, main = "Variable Importance - Random Forest")
 
 Let's consider an example and try to predict the Response for given values.
 ```{r}
-# Prediction 
+# Prediction model
 subject <- data.frame(
   RomanticGestureScore = factor(10, levels = levels(proposal_df$RomanticGestureScore)), CompatibilityScore = factor(7, levels = levels(proposal_df$CompatibilityScore)), DistanceKM = 10, Height = 169, Income = 6000, Age = 23)
 
