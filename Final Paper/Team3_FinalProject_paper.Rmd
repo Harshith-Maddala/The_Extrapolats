@@ -1,5 +1,5 @@
 ---
-title: "Dating with Data - Exploring OKCupid Profiles to Understand User Characteristics"
+title: "PREDICTING THE PROPOSAL: A Data-Driven Approach to Love"
 author: "Maddala Harshith"
 date: "`r Sys.Date()`"
 output:  
@@ -8,7 +8,6 @@ output:
       toc_depth: 3
       number_sections: false
       code_folding: hide
-
 ---
 
 ```{r setup, include=FALSE}
@@ -17,22 +16,109 @@ knitr::opts_chunk$set(warning = F, results = "show", message = F)
 library(ezids)
 ```
 
-## R Markdown
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
+# ABSTRACT
+```{r}
 ```
 
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
+# INTRODUCTION
+```{r}
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+# SUMMARY OF THE DATASET
+```{r}
+```
+
+# DATASET OVERVIEW
+```{r}
+```
+
+## Loading the Dataset 
+```{r}
+```
+
+### Before Cleaning
+```{r}
+```
+
+# DATA CLEANING
+```{r}
+```
+
+## Summary of the cleaned Dataset
+```{r}
+```
+
+# EXPLORATORY DATA ANALYSIS
+```{r}
+```
+
+## Distribution of Numeric Variables
+```{r}
+```
+
+### Outlier removal
+```{r}
+```
+
+# SMART QUESTIONS
+```{r}
+```
+
+### Question 1:
+```{r}
+```
+
+#### OBSERVATION:
+```{r}
+```
+
+#### RESULT:
+```{r}
+```
+
+### Question 2:
+```{r}
+```
+
+#### OBSERVATION:
+```{r}
+```
+
+#### RESULT:
+```{r}
+```
+
+### Question 3:
+```{r}
+```
+
+#### OBSERVATION:
+```{r}
+```
+
+#### RESULT:
+```{r}
+```
+
+### Question 4:
+```{r}
+```
+
+#### OBSERVATION:
+```{r}
+```
+
+#### RESULT:
+```{r}
+```
+
+# CONCLUSION
+```{r}
+```
+
+# REFERENCES
+```{r}
+```
+
+
+
