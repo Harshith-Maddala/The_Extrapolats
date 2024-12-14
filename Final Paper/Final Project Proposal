@@ -12,6 +12,6 @@ SMART Questions:
 4. How can we improve the accuracy of the Random Forest model predicting proposal acceptance by adding Income, Age, and DistanceKM as features? Which additional features could further enhance the model's performance, and how would the model accuracy change?
 
 
-Dataset Source : 
+Dataset Source : https://www.kaggle.com/datasets/anyasorc/marriage-proposal
 
 GitHub repo :
