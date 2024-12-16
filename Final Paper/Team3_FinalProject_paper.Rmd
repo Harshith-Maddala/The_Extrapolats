@@ -1,6 +1,6 @@
 ---
 title: "PREDICTING THE PROPOSAL: A Data-Driven Approach to Love"
-author: "Maddala Harshith"
+author: "The Extrapolats"
 date: "`r Sys.Date()`"
 output:  
     rmdformats::readthedown:
