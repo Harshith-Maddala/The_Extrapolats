@@ -178,7 +178,7 @@ grid.arrange(p1, p2, ncol = 2)
 ```{r}
 ```
 
-### Question 4:
+### Question 4: How can we enhance the accuracy of a Random Forest model in predicting proposal acceptance using features like Income, Age, and DistanceKM? Adding what other features might further improve the model's performance, and how would the model's accuracy change as a result?
 
 # Split the dataset into training and testing sets 
 
