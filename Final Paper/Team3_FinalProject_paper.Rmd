@@ -201,6 +201,10 @@ mse <- mean(residuals(model_lr)^2)
 cat("Mean Squared Error:", mse, "\n")
 ```
 
+R-Squared value and MSE were very low for this model.
+
+
+
 #### RESULT:
 ```{r}
 ```
