@@ -28,6 +28,8 @@ library(ezids)
 ```{r}
 In our analysis of marriage proposals, a comprehensive dataset is used-one that provides a data-driven perspective on relationship dynamics and proposal outcomes. The set consists of 10,000 unique observations, each of which has been measured over 9 preselected variables indicative of both demographic information and relationship quality metrics. This data is particularly unique in that it contains no missing values and no outliers, thus rendering it perfect for robust statistical analysis.
 
+The dataset bridges the gap between the quantifiable aspects of the relationships, such as income and physical distance, with the more nuanced elements that are the compatibility and communication scores.
+
 ```
 
 # DATASET OVERVIEW
