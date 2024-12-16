@@ -321,6 +321,8 @@ The Model Predicts the outcome to be 'Yes'(1).
 
 #### OBSERVATION:
 ```{r}
+According to the study, adding more features to a Random Forest model can improve its ability to predict proposal acceptance. Initially, the model included factors such as Height, Income, Age, and DistanceKM, which led to an Out-Of-Bag (OOB) error rate of 24.1%. Key performance metrics, including an accuracy of 95.1%, precision of 94.4%, recall of 99.5%, and an AUC of 0.97, showcased the model's strong predictive capabilities. Nevertheless, the Mean Decrease Gini scores indicated that factors such as CompatibilityScore and RomanticGestureScore were significantly important and could enhance predictions further. 
+
 ```
 
 #### RESULT:
