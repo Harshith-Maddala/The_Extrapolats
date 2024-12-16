@@ -26,6 +26,7 @@ library(ezids)
 
 # SUMMARY OF THE DATASET
 ```{r}
+In our analysis of marriage proposals, a comprehensive dataset is used-one that provides a data-driven perspective on relationship dynamics and proposal outcomes. 
 
 ```
 
