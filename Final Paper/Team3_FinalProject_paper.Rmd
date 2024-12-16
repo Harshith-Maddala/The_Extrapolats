@@ -239,17 +239,157 @@ predict1
 
 The Linear Regression Model has predicted the income of such individual mentioned above to be $26637.
 
-### Question 3:
-```{r}
+### Question 3: Which classification model (logistic regression, decision tree, or random forest) is the most suitable for predicting whether a proposal will be accepted or rejected based on Relational(RomanticGestureScore, CompatibilityScore, and DistanceKM) features? 
+
+The reason for selecting the three features, RomanticGestureScore, CompatibilityScore, and DistanceKM are due to their role on relational dynamics. RomanticGestureScore represents an individual’s capacity for expressing their affection physically. CompatibilityScore highlights the match of personality traits and key elements in determining the relation's success. DistanceKM on the other hand, represent the physical distance between the partners. Combined together, these features may provide a very valuble insights on the proposal's outcome. So, let's see if the emotional factors play a significant role in determining a relation's success.
+
+First, let's proceed with Logistic Regression Model first. 
+```{r, warning=FALSE}
+# Split the dataset into training and testing sets 
+set.seed(123)  
+index <- createDataPartition(proposal_df$Response, p = 0.8, list = FALSE)
+train_data <- proposal_df[index, ]
+test_data <- proposal_df[-index, ]
+
+# Logistic Regression Model
+logistic_model <- glm(Response ~ RomanticGestureScore + CompatibilityScore + CommunicationScore, data = train_data, family = binomial)
+logistic_probabilities <- predict(logistic_model, test_data, type = "response")
+logistic_predicted <- ifelse(logistic_probabilities > 0.5, 1, 0)
+actual <- as.factor(test_data$Response)
+predicted <- as.factor(logistic_predicted)
+
+# Confusion Matrix and metrics
+confusion <- confusionMatrix(predicted, actual, positive = "1")
+accuracy <- confusion$overall["Accuracy"]
+precision <- confusion$byClass["Pos Pred Value"]  
+recall <- confusion$byClass["Sensitivity"]       
+f1_score <- 2 * (precision * recall) / (precision + recall)
+# AUC
+roc_curve <- roc(actual, logistic_probabilities, levels = c("0", "1"))
+auc_value <- auc(roc_curve)
+
+# Print metrics
+cat("Logistic Regression Performance Metrics:\n")
+cat("Accuracy: ", accuracy, "\n")
+cat("Precision: ", precision, "\n")
+cat("Recall: ", recall, "\n")
+cat("F1-Score: ", f1_score, "\n")
+cat("AUC: ", auc_value, "\n")
+
+# Plot ROC Curve 
+plot(roc_curve, main = "ROC Curve for Logistic Regression", col = "blue", lwd = 2)
+abline(a = 0, b = 1, col = "gray", lty = 2)
+auc_text <- paste("AUC =", round(auc_value, 3)) # Add AUC value to the plot
+text(0.6, 0.2, auc_text, col = "blue", cex = 1.2)
 ```
 
 #### OBSERVATION:
-```{r}
+The Model uses 80% of the data for training, and the remaining 20% of the data for testing evaluation. The model predicts the outcome of the proposal with probabilities calculated for classification based the three features we have given. We will use few metrics to decide how well the model is performing.
+
+First, we got accuracy as 79.5%, precision as 83.4%, recall as 91.7%, and F1-score as 87.3%. While the balanced F1-score shows the overall reliability of the model, a high recall show the strong sensitivity to the accepted proposals. The AUC value is 81.5%, along with the ROC curve, certifies the model's efficiency.
+
+
+Now, let's proceed to the next model Decision tree:
+```{r, warning=FALSE}
+# Split the dataset into training and testing sets 
+set.seed(123)
+trainIndex <- createDataPartition(proposal_df$Response, p = 0.8, list = FALSE)
+trainData <- proposal_df[trainIndex, ]
+testData <- proposal_df[-trainIndex, ]
+
+# Decision Tree Model
+decision_tree_model <- rpart(Response ~ RomanticGestureScore + CompatibilityScore + CommunicationScore, data = trainData, method = "class")
+predicted_probabilities_tree <- predict(decision_tree_model, proposal_df, type = "prob")[, 2]  
+predicted_classes_tree <- predict(decision_tree_model, proposal_df, type = "class")            
+actual <- as.factor(proposal_df$Response)
+
+# Visualize the Decision Tree
+# rpart.plot(decision_tree_model, type = 2, extra = 104, main = "Decision Tree")
+
+# Confusion Matrix and metrics
+confusion_tree <- confusionMatrix(as.factor(predicted_classes_tree), actual, positive = "1")
+accuracy_tree <- confusion_tree$overall["Accuracy"]
+precision_tree <- confusion_tree$byClass["Pos Pred Value"]  
+recall_tree <- confusion_tree$byClass["Sensitivity"]        
+f1_score_tree <- 2 * (precision_tree * recall_tree) / (precision_tree + recall_tree)
+roc_curve_tree <- roc(actual, predicted_probabilities_tree, levels = c("0", "1"))
+auc_value_tree <- auc(roc_curve_tree)
+
+# Print Metrics
+cat("Decision Tree Metrics:\n")
+cat("Accuracy:", round(accuracy_tree, 3), "\n")
+cat("Precision:", round(precision_tree, 3), "\n")
+cat("Recall:", round(recall_tree, 3), "\n")
+cat("F1-Score:", round(f1_score_tree, 3), "\n")
+cat("AUC:", round(auc_value_tree, 3), "\n")
+
+# Plot ROC Curve 
+plot(roc_curve_tree, main = "ROC Curve for Decision Tree", col = "blue", lwd = 2)
+abline(a = 0, b = 1, col = "gray", lty = 2)
+auc_text_tree <- paste("AUC =", round(auc_value_tree, 3)) # Add AUC value to the plot
+text(0.6, 0.2, auc_text_tree, col = "blue", cex = 1.2)
+
 ```
+#### OBSERVATION:
+
+In decision tree, we follow the similar approach as Logistic regression to divide the data for training and testing. But unlike Logistic regression, decision tree classifies responses and produces probabilities and classes for evaluation.
+
+Overall, the Decision tree was little under performed compared to the logistic regression. The metrics came out to be 78.6% for accuracy, 81.8% for precision and 87% for F1-score. Although it got a better F1-score (93%), It got a really low AUC (71.7%) and the ROC curve seems to be less curvy compared the previous graph.
+
+
+Now, let's move on to the last model, Random Forest, Theoretically, this would be the best model out of all three of them. It combines multiple trees to reduce overfitting and leverages random feature selection and bagging, making it more accurate and robust. 
+```{r, warning=FALSE}
+# Split the dataset into training and testing sets 
+set.seed(123)
+trainIndex <- createDataPartition(proposal_df$Response, p = 0.8, list = FALSE)
+trainData <- proposal_df[trainIndex, ]
+testData <- proposal_df[-trainIndex, ]
+
+# Random Forest Model
+random_forest_model <- randomForest(Response ~ RomanticGestureScore + CompatibilityScore + CommunicationScore, data = trainData, ntree = 500, mtry = 2, importance = TRUE)
+
+# Print model summary
+# print(random_forest_model)
+
+# Predictions
+predicted_probabilities_rf <- predict(random_forest_model, proposal_df, type = "prob")[, 2]  
+predicted_classes_rf <- predict(random_forest_model, proposal_df, type = "response")         
+actual <- as.factor(proposal_df$Response)
+
+# Confusion Matrix and metrics
+confusion_rf <- confusionMatrix(as.factor(predicted_classes_rf), actual, positive = "1")
+accuracy_rf <- confusion_rf$overall["Accuracy"]
+precision_rf <- confusion_rf$byClass["Pos Pred Value"]  
+recall_rf <- confusion_rf$byClass["Sensitivity"]        
+f1_score_rf <- 2 * (precision_rf * recall_rf) / (precision_rf + recall_rf)
+roc_curve_rf <- roc(actual, predicted_probabilities_rf, levels = c("0", "1"))
+auc_value_rf <- auc(roc_curve_rf)
+
+# Print Metrics
+cat("Random Forest Metrics:\n")
+cat("Accuracy:", round(accuracy_rf, 3), "\n")
+cat("Precision:", round(precision_rf, 3), "\n")
+cat("Recall:", round(recall_rf, 3), "\n")
+cat("F1-Score:", round(f1_score_rf, 3), "\n")
+cat("AUC:", round(auc_value_rf, 3), "\n")
+
+# Plot ROC Curve 
+plot(roc_curve_rf, main = "ROC Curve for Random Forest", col = "blue", lwd = 2)
+abline(a = 0, b = 1, col = "gray", lty = 2)
+auc_text_rf <- paste("AUC =", round(auc_value_rf, 3)) # Add AUC value to the plot
+text(0.6, 0.2, auc_text_rf, col = "blue", cex = 1.2)
+
+# Variable Importance Plot
+varImpPlot(random_forest_model, main = "Variable Importance - Random Forest")
+
+```
+#### OBSERVATION:
+
+As expected, Random Forest out performed the remaining two models with an accuracy of 80.7%, precision of 84.1%, recall of 92.4% and 88% F1-score. It even has a high AUC score of 84.6% and the ROC curve being more curvy and closer to the left top side indicates how efficient the model is. These improvement using the random forest only implies the model's advantage in reducing the overfitting through learning and capturing complex relationships in the data. 
 
 #### RESULT:
-```{r}
-```
+In comparing the three models Logistic Regression, Decision Tree, and Random Forest, the random forest turned out to be most effective model. Logistic regression showed solid potential with 81.5% AUC but not a better model overall. The Decision tree has improved in terms of recall, but the overfit of the data was evident from the low AUC score 71.7%. However, Random forest, with a balanced precision and recall, achieved the highest AUC and Accuracy, making itslef the best-performing model for predicting proposal acceptance, for the given features RomanticGestureScore, CompatibilityScore, and DistanceKM.
+
 
 ### Question 4: How can we enhance the accuracy of a Random Forest model in predicting proposal acceptance using features like Income, Age, and DistanceKM? Adding what other features might further improve the model's performance, and how would the model's accuracy change as a result?
 
