@@ -26,6 +26,8 @@ library(ezids)
 
 # SUMMARY OF THE DATASET
 ```{r}
+# Structure of the dataset
+str(proposal_df)
 ```
 
 # DATASET OVERVIEW
