@@ -292,6 +292,8 @@ predicted_probabilities <- predict(random_forest_model, subject, type = "prob")
 cat("Predicted Class (0 or 1):\n")
 print(predicted_classes)
 
+The Model Predicts the outcome to be 'Yes'(1).
+
 #### OBSERVATION:
 ```{r}
 ```
