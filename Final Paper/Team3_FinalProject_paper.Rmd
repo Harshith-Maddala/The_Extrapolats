@@ -250,6 +250,34 @@ predicted_probabilities_rf <- predict(random_forest_model, proposal_df, type = "
 predicted_classes_rf <- predict(random_forest_model, proposal_df, type = "response")
 actual <- as.factor(proposal_df$Response)
 
+# Confusion Matrix and metrics
+confusion_rf <- confusionMatrix(as.factor(predicted_classes_rf), actual, positive = "1")
+accuracy_rf <- confusion_rf$overall["Accuracy"]
+precision_rf <- confusion_rf$byClass["Pos Pred Value"]  
+recall_rf <- confusion_rf$byClass["Sensitivity"]        
+f1_score_rf <- 2 * (precision_rf * recall_rf) / (precision_rf + recall_rf)
+roc_curve_rf <- roc(actual, predicted_probabilities_rf, levels = c("0", "1"))
+auc_value_rf <- auc(roc_curve_rf)
+
+# Print Metrics
+cat("Random Forest Metrics:\n")
+cat("Accuracy:", round(accuracy_rf, 3), "\n")
+cat("Precision:", round(precision_rf, 3), "\n")
+cat("Recall:", round(recall_rf, 3), "\n")
+cat("F1-Score:", round(f1_score_rf, 3), "\n")
+cat("AUC:", round(auc_value_rf, 3), "\n")
+
+# Plot ROC Curve
+plot(roc_curve_rf, main = "ROC Curve for Random Forest", col = "blue", lwd = 2)
+abline(a = 0, b = 1, col = "gray", lty = 2)
+auc_text_rf <- paste("AUC =", round(auc_value_rf, 3)) 
+text(0.6, 0.2, auc_text_rf, col = "blue", cex = 1.2)
+
+# Variable Importance Plot
+varImpPlot(random_forest_model, main = "Variable Importance - Random Forest")
+
+```
+
 
 #### OBSERVATION:
 ```{r}
