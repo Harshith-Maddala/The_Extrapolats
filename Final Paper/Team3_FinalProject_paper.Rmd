@@ -42,6 +42,17 @@ library(ezids)
 
 # DATA CLEANING
 
+```{r}
+
+# Check for empty and NA values 
+empty_values <- sapply(proposal_df, function(x) sum(x == "", na.rm = TRUE))
+na_values <- sapply(proposal_df, function(x) sum(is.na(x)))
+print("Empty Values in Each Column:")
+print(empty_values)
+print("NA Values in Each Column:")
+print(na_values)
+
+```
 
 ```{r}
 
