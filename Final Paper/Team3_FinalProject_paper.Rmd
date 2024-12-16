@@ -45,7 +45,12 @@ library(ezids)
 ```
 
 ## Summary of the cleaned Dataset
+
 ```{r}
+
+print("Summary of cleaned data")
+summary(proposal_df)
+
 ```
 
 # EXPLORATORY DATA ANALYSIS
