@@ -220,6 +220,19 @@ text(0.6, 0.2, auc_text_rf, col = "blue", cex = 1.2)
 
 ```
 
+We consider all variables here to obtain the Mean Decrease Gini Scores of each variable
+
+```{r}
+
+# Train a random forest model for comparision
+rf_model <- randomForest(Response ~ ., data = proposal_df)
+
+# View feature importance
+importance(rf_model)
+varImpPlot(rf_model) # Plot
+
+```
+
 
 
 #### OBSERVATION:
