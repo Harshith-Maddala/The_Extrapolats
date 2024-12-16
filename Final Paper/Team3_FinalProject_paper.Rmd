@@ -26,11 +26,7 @@ library(ezids)
 
 # SUMMARY OF THE DATASET
 ```{r}
-# Reading the dataset
-proposal_df = read.csv("marriage_proposal.csv")
 
-# Structure of the dataset
-str(proposal_df)
 ```
 
 # DATASET OVERVIEW
@@ -39,10 +35,14 @@ str(proposal_df)
 
 ## Loading the Dataset 
 ```{r}
+# Reading the dataset
+proposal_df = read.csv("marriage_proposal.csv")
 ```
 
 ### Before Cleaning
 ```{r}
+# Structure of the dataset
+str(proposal_df)
 ```
 
 # DATA CLEANING
