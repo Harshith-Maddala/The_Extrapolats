@@ -34,12 +34,15 @@ library(ezids)
 ```
 
 ## Loading the Dataset 
+
+
+### Before Cleaning
+
 ```{r}
 # Reading the dataset
 proposal_df = read.csv("marriage_proposal.csv")
 ```
 
-### Before Cleaning
 ```{r}
 # Structure of the dataset
 str(proposal_df)
