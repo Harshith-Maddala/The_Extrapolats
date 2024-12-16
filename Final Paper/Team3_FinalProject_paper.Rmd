@@ -182,6 +182,8 @@ The exploratory analysis showed low correlations among individual attributes suc
 ### Question 2: Can a linear regression model effectively predict the Income of an individual using Age, Height, and RomanticGestureScore as predictors?
 
 ```{r}
+# linear regression model
+
 ```
 
 #### OBSERVATION:
