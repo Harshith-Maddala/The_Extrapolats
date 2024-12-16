@@ -217,8 +217,10 @@ We will now try to predict income of an individual who are 30 years old and 160 
 input1 <- data.frame(Age = 30, Height = 160, RomanticGestureScore = factor(8, levels = levels(proposal_df$RomanticGestureScore)))
 
 #Prediction model
-
+predict1 <- predict(model_lr, newdata = input1)
+predict1
 ```
+
 
 ### Question 3:
 ```{r}
