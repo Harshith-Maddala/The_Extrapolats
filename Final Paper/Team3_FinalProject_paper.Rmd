@@ -26,6 +26,9 @@ library(ezids)
 
 # SUMMARY OF THE DATASET
 ```{r}
+# Reading the dataset
+proposal_df = read.csv("marriage_proposal.csv")
+
 # Structure of the dataset
 str(proposal_df)
 ```
