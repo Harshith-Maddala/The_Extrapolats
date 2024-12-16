@@ -186,7 +186,7 @@ The exploratory analysis showed low correlations among individual attributes suc
 model_lr <- lm(Income ~ Age + Height + RomanticGestureScore, data = proposal_df)
 
 # Summary of the model
-
+summary(model_lr)
 
 ```
 
