@@ -157,9 +157,7 @@ p2 <- ggplot(proposal_df, aes(x = as.factor(CompatibilityScore))) + geom_bar(fil
 grid.arrange(p1, p2, ncol = 2)
 ```
 
-## Distribution of Numeric Variables
-```{r}
-```
+The exploratory analysis showed low correlations among individual attributes such as Income, Age, and DistanceKM concerning proposal acceptance. We observed a minor rise in acceptance rates among higher-income groups, yet anomalies in Income and DistanceKM indicate that refining or modifying the data may improve model effectiveness.
 
 ### Outlier removal
 ```{r}
