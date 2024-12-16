@@ -192,6 +192,9 @@ summary(model_lr)
 
 #### OBSERVATION:
 ```{r}
+# R-squared value
+rsq <- summary(model_lr)$r.squared
+cat("R-squared:", rsq, "\n")
 ```
 
 #### RESULT:
