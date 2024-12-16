@@ -195,6 +195,10 @@ summary(model_lr)
 # R-squared value
 rsq <- summary(model_lr)$r.squared
 cat("R-squared:", rsq, "\n")
+
+# Mean Squared Error (MSE)
+mse <- mean(residuals(model_lr)^2)
+cat("Mean Squared Error:", mse, "\n")
 ```
 
 #### RESULT:
