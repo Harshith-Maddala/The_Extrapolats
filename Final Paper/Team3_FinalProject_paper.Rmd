@@ -221,6 +221,7 @@ predict1 <- predict(model_lr, newdata = input1)
 predict1
 ```
 
+The Linear Regression Model has predicted the income of such individual mentioned above to be $26637.
 
 ### Question 3:
 ```{r}
