@@ -34,7 +34,7 @@ The dataset bridges the gap between the quantifiable aspects of the relationship
 
 # DATASET OVERVIEW
 ```{r}
-The architecture of the variables in our dataset reflects the same thoughtfulness for the complexity of relationship dynamics. For data organization, there are mainly two categories: integer-type variables and categorical measurements.
+The architecture of the variables in our dataset reflects the same thoughtfulness for the complexity of relationship dynamics. For data organization, there are mainly two categories: integer-type variables and categorical measurements. The integer-type variables include basic measures such as height in centimeters, age in years, income in USD, and the physical distance in kilometers between partners. These give concrete, measurable aspects of the relationship dynamic.
 ```
 
 ## Loading the Dataset 
