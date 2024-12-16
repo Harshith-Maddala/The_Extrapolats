@@ -49,7 +49,67 @@ library(ezids)
 ```
 
 # EXPLORATORY DATA ANALYSIS
+### Loading necessary libraries
+
+
+
+### Distribution of the Numeric variables
+
+Let’s take a look at descriptive stats of Numeric variables.
 ```{r}
+# Descriptive Statistics
+# Numeric variables
+describe(proposal_df %>% select(Age, Height, Income, DistanceKM))
+```
+
+Graphical Representations of Integer variables.
+
+```{r}
+# Histogram of age
+
+ggplot(proposal_df, aes(x = Age, fill = Age)) + geom_histogram(binwidth = 5, fill = "lightpink", color = "black") + labs(title = "Age Distribution", x = "Age", y = "Frequency") + theme_minimal()
+```
+
+```{r, warning=FALSE}
+# Frequency polygon for Height
+ggplot(proposal_df, aes(x = Height)) + 
+  geom_freqpoly(binwidth = 5, color = "grey", size = 1.2) + 
+  labs(title = "Height Distribution", x = "Height (cm)", y = "Frequency") + 
+  theme_minimal()
+
+```
+
+
+```{r}
+# We can use this function to check if any outliers were detected in variables.
+#proposal_df <- outlierKD2(proposal_df, DistanceKM, rm = TRUE, boxplt = TRUE, histogram = FALSE, qqplt = TRUE)
+```
+
+```{r}
+ggplot(proposal_df, aes(x = cut(Income, breaks = c(5000, 20000, 30000, 40000, 50000), labels = c("Low Income", "Medium Income", "High Income", "Very High Income"), include.lowest = TRUE))) + geom_bar(fill = "steelblue", color = "black") + labs(title = "Population Distribution by Income Category", x = "Income Category", y = "Frequency") + theme_minimal()
+
+```
+
+```{r}
+# Boxplot for Distance
+ggplot(proposal_df, aes(y = DistanceKM)) + geom_boxplot(fill = "lightyellow", color = "black") + labs(title = "Distance (KM) Boxplot", y = "Distance (KM)") + theme_minimal()
+```
+
+Graphical Representations of Factorial variables.
+
+```{r, warning=FALSE}
+# Pie chart for Response variable
+ggplot(proposal_df, aes(x = "", fill = Response)) + geom_bar(width = 1, stat = "count", color = "black") + coord_polar(theta = "y") + geom_text(aes(label = scales::percent(..count../sum(..count..))), position = position_stack(vjust = 0.5), stat = "count") + scale_fill_manual(values = c("0" = "red", "1" = "green"), labels = c("Rejected", "Accepted")) + labs(title = "Proposal Response Distribution", fill = "Response") + theme_void() + theme(plot.title = element_text(hjust = 0.5, size = 16))
+```
+
+```{r}
+# bar plot for Communication Score
+p1 <- ggplot(proposal_df, aes(x = as.factor(CommunicationScore))) + geom_bar(fill = "blue", color = "black") + labs(title = "Communication Score Distribution", x = "Communication Score", y = "Frequency") + theme_minimal()
+
+# bar plot for Compatibility Score
+p2 <- ggplot(proposal_df, aes(x = as.factor(CompatibilityScore))) + geom_bar(fill = "green", color = "black") + labs(title = "Compatibility Score Distribution", x = "Compatibility Score", y = "Frequency") + theme_minimal()
+
+grid.arrange(p1, p2, ncol = 2)
 ```
 
 ## Distribution of Numeric Variables
