@@ -41,8 +41,19 @@ library(ezids)
 ```
 
 # DATA CLEANING
+
+
 ```{r}
+
+# Converting required 'int' columns into 'factor'
+proposal_df$RomanticGestureScore <- as.factor(proposal_df$RomanticGestureScore)
+proposal_df$CompatibilityScore <- as.factor(proposal_df$CompatibilityScore)
+proposal_df$CommunicationScore <- as.factor(proposal_df$CommunicationScore)
+proposal_df$Response <- as.factor(proposal_df$Response)
+
 ```
+
+
 
 ## Summary of the cleaned Dataset
 
