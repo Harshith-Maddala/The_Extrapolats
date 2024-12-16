@@ -157,7 +157,7 @@ p2 <- ggplot(proposal_df, aes(x = as.factor(CompatibilityScore))) + geom_bar(fil
 grid.arrange(p1, p2, ncol = 2)
 ```
 
-The exploratory analysis showed low correlations among individual attributes such as Income, Age, and DistanceKM concerning proposal acceptance. We observed a minor rise in acceptance rates among higher-income groups, yet anomalies in Income and DistanceKM indicate that refining or modifying the data may improve model effectiveness.
+The exploratory analysis showed low correlations among individual attributes such as Income, Age, and DistanceKM concerning proposal acceptance. We observed a minor rise in acceptance rates among higher-income groups, yet anomalies in Income and DistanceKM indicate that refining or modifying the data may improve model effectiveness. The distribution of Age indicated that younger individuals, particularly those aged 25–35, are more represented, with minor declines in acceptance rates in older groups. Distance played a critical role, with shorter distances correlating positively with acceptance, though its influence diminished significantly beyond 50 KM. Overall, the dataset lacked strong linear relationships, indicating that advanced feature engineering and interaction terms may be necessary to capture underlying patterns.
 
 ### Outlier removal
 ```{r}
