@@ -203,7 +203,11 @@ cat("Mean Squared Error:", mse, "\n")
 
 R-Squared value and MSE were very low for this model.
 
-
+```{r}
+# Plot diagnostic plots
+par(mfrow = c(2, 2))
+plot(model_lr)
+```
 
 #### RESULT:
 ```{r}
