@@ -17,7 +17,7 @@ library(ezids)
 ```
 
 # ABSTRACT
-```{r}
+
 PREDICTING THE PROPOSAL: A Data-Driven Approach to Love
 
 This project explores the intriguing concept of predicting the success of marriage proposals using a data-driven approach. By analyzing the Marriage Proposal Dataset, we aim to identify key factors influencing whether a proposal will be accepted or rejected. The dataset includes features such as age, height, income, romantic gesture scores, compatibility scores, communication scores, and distance between individuals.
@@ -27,17 +27,18 @@ The analysis begins with comprehensive data cleaning and exploratory data analys
 To build predictive models, we compare the performance of three machine learning classifiers: Logistic Regression, Decision Tree, and Random Forest. Evaluation metrics, including accuracy, precision, recall, F1-score, and AUC-ROC, demonstrate that the Random Forest model outperforms other models in predicting proposal acceptance. By incorporating features such as income, age, height, distance, romantic gestures, and compatibility scores, the model achieves high predictive accuracy.
 
 Further analysis is conducted to enhance the model's performance by identifying critical predictors using feature importance scores. Real-world predictions are demonstrated by inputting hypothetical data into the model, showcasing its practical application.This project highlights the potential of machine learning techniques to analyze interpersonal relationships and decision-making processes, providing valuable insights into the dynamics of love and proposal acceptance. The findings can be extended to similar domains, such as dating and matchmaking systems, for improved user experiences and decision support.
-
+```{r}
 
 ```
 
 # INTRODUCTION
-```{r}
+
 In today's data-driven world, the use of analytics and machine learning has extended beyond traditional business and scientific domains into more personal and interpersonal aspects of human life. This project, "Predicting the Proposal: A Data-Driven Approach to Love," aims to explore the factors influencing the success or rejection of marriage proposals using statistical analysis and machine learning techniques. The study leverages a comprehensive dataset containing key variables such as age, income, height, romantic gesture scores, compatibility scores, communication scores, and distance between individuals. These features are analyzed to identify their relationships with the outcome of a proposal and to build predictive models that determine whether a marriage proposal will be accepted or rejected.
 
 The project begins with data preprocessing to ensure the quality and reliability of the analysis, followed by exploratory data analysis (EDA) to visualize and summarize key trends within the dataset. Hypothesis testing is used to examine the significance of certain features, such as income levels, in influencing proposal acceptance. The core of the project involves comparing the performance of Logistic Regression, Decision Tree, and Random Forest models to predict proposal outcomes. Through rigorous evaluation metrics like accuracy, precision, recall, F1-score, and AUC-ROC, the Random Forest model emerges as the most effective classifier. By analyzing feature importance, the study highlights the key predictors of a successful proposal, such as compatibility scores and romantic gestures.
 
 This research demonstrates how machine learning can provide unique insights into human behavior and relationships, offering potential applications in matchmaking, dating platforms, and decision support systems. Through a combination of statistical rigor and predictive modeling, this project bridges the gap between data science and the complex dynamics of human relationships, showcasing the transformative power of data-driven approaches in unconventional fields.
+```{r}
 ```
 
 # SUMMARY OF THE DATASET
