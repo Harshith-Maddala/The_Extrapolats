@@ -1,5 +1,5 @@
 ---
-title: "PREDICTING THE PROPOSAL: A Data-Driven Approach to Love"
+title: "PREDICTING THE PROPOSAL: A Data-Driven Approach to "
 author: "The Extrapolats"
 date: "`r Sys.Date()`"
 output:  
