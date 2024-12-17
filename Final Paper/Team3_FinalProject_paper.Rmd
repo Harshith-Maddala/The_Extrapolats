@@ -18,10 +18,23 @@ library(ezids)
 
 # ABSTRACT
 ```{r}
+PREDICTING THE PROPOSAL: A Data-Driven Approach to Love
+
+This project explores the intriguing concept of predicting the success of marriage proposals using a data-driven approach. By analyzing the Marriage Proposal Dataset, we aim to identify key factors influencing whether a proposal will be accepted or rejected. The dataset includes features such as age, height, income, romantic gesture scores, compatibility scores, communication scores, and distance between individuals.
+
+The analysis begins with comprehensive data cleaning and exploratory data analysis (EDA) to understand the distribution of variables and detect potential outliers. Descriptive statistics, visualizations, and contingency analysis are used to identify patterns and relationships within the data. Hypothesis testing, specifically the Chi-Square Test, is employed to examine the relationship between income levels and proposal responses.
+
+To build predictive models, we compare the performance of three machine learning classifiers: Logistic Regression, Decision Tree, and Random Forest. Evaluation metrics, including accuracy, precision, recall, F1-score, and AUC-ROC, demonstrate that the Random Forest model outperforms other models in predicting proposal acceptance. By incorporating features such as income, age, height, distance, romantic gestures, and compatibility scores, the model achieves high predictive accuracy. Further analysis is conducted to enhance the model's performance by identifying critical predictors using feature importance scores. Real-world predictions are demonstrated by inputting hypothetical data into the model, showcasing its practical application.This project highlights the potential of machine learning techniques to analyze interpersonal relationships and decision-making processes, providing valuable insights into the dynamics of love and proposal acceptance. The findings can be extended to similar domains, such as dating and matchmaking systems, for improved user experiences and decision support.
+
 ```
 
 # INTRODUCTION
 ```{r}
+In today's data-driven world, the use of analytics and machine learning has extended beyond traditional business and scientific domains into more personal and interpersonal aspects of human life. This project, "Predicting the Proposal: A Data-Driven Approach to Love," aims to explore the factors influencing the success or rejection of marriage proposals using statistical analysis and machine learning techniques. The study leverages a comprehensive dataset containing key variables such as age, income, height, romantic gesture scores, compatibility scores, communication scores, and distance between individuals. These features are analyzed to identify their relationships with the outcome of a proposal and to build predictive models that determine whether a marriage proposal will be accepted or rejected.
+
+The project begins with data preprocessing to ensure the quality and reliability of the analysis, followed by exploratory data analysis (EDA) to visualize and summarize key trends within the dataset. Hypothesis testing is used to examine the significance of certain features, such as income levels, in influencing proposal acceptance. The core of the project involves comparing the performance of Logistic Regression, Decision Tree, and Random Forest models to predict proposal outcomes. Through rigorous evaluation metrics like accuracy, precision, recall, F1-score, and AUC-ROC, the Random Forest model emerges as the most effective classifier. By analyzing feature importance, the study highlights the key predictors of a successful proposal, such as compatibility scores and romantic gestures.
+
+This research demonstrates how machine learning can provide unique insights into human behavior and relationships, offering potential applications in matchmaking, dating platforms, and decision support systems. Through a combination of statistical rigor and predictive modeling, this project bridges the gap between data science and the complex dynamics of human relationships, showcasing the transformative power of data-driven approaches in unconventional fields.
 ```
 
 # SUMMARY OF THE DATASET
@@ -183,16 +196,29 @@ The exploratory analysis showed low correlations among individual attributes suc
 ```{r}
 ```
 
-### Question 1:
+### Question 1:Is there a statistically significant difference in the Response variable (Proposal Accepted vs Rejected) based on the Income of the individual?
 ```{r}
+# Contingency table for Income Category and Proposal Response
+contingency_table <- table(cut(proposal_df$Income, 
+                               breaks = c(5000, 20000, 30000, 40000, 50000), 
+                               labels = c("Low Income", "Medium Income", "High Income", "Very High Income"), 
+                               include.lowest = TRUE), 
+                           proposal_df$Response)
+
+# Chi-Square Test
+chi_square_test <- chisq.test(contingency_table)
+chi_square_test
 ```
+The P-value is greater than the significance level (0.05). Therefore, we cannot reject the Null Hypothesis. There is no statistically significant difference in the Proposal Response based on an Individual's Income.
 
 #### OBSERVATION:
 ```{r}
+Identified the factors influencing proposal acceptance. Data cleaning and **exploratory analysis** revealed that while income showed no statistically significant impact on proposal response (P-value > 0.05), relational features like **RomanticGestureScore**, **CompatibilityScore**, and **CommunicationScore** played a crucial role. Among the models implemented—**Logistic Regression, Decision Tree, and Random Forest**—the **Random Forest model** performed best, achieving high accuracy, precision, recall, and AUC. Feature importance analysis further confirmed that interpersonal traits are stronger predictors of proposal acceptance than demographic variables like income. The results demonstrate the value of **machine learning** in uncovering patterns in human relationships and predicting real-world outcomes.
 ```
 
 #### RESULT:
 ```{r}
+The results of the analysis highlight that **income** is not a statistically significant factor in determining proposal acceptance, as confirmed by the **Chi-Square Test** (P-value > 0.05). Among the machine learning models implemented, the **Random Forest model** outperformed Logistic Regression and Decision Tree models, achieving the highest **accuracy, precision, recall, and AUC** scores. Feature importance analysis revealed that **RomanticGestureScore**, **CompatibilityScore**, and **CommunicationScore** are the most influential predictors of proposal acceptance. Incorporating additional features such as **Age**, **Income**, **Height**, and **DistanceKM** further enhanced the model's performance. The final **Random Forest model** demonstrates strong predictive capability, successfully capturing the key factors influencing proposal outcomes.
 ```
 
 ### Question 2: Can a linear regression model effectively predict the Income of an individual using Age, Height, and RomanticGestureScore as predictors?
