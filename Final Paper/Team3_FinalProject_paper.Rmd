@@ -523,8 +523,15 @@ Integrating CompatibilityScore and RomanticGestureScore into the model resulted 
 ```
 
 # CONCLUSION
-```{r}
-```
+
+1. We have plotted a graph and observed the relation between acceptance and rejection ratio for individuals in different income categories. We have also conducted Pearson's Chi-squared test to see if there is any statistical difference in Response variable based on the individual's Income. We got a high p-value of 0.8 suggesting there is no significant association between Proposal and Income of an individual.
+
+2. The linear regression model built using the features Age, Height, and RomanticGestureScore as predictors to determine the income of an individual has resulted in an effective model. This can be supported with the help of low R-squared value of 0.000851 and the high Mean Squared Error (MSE) of 1.7e+08. This means the chosen features do not explain much variation in income, and/or the model Linear regression is inefficient in making accurate predictions for this data or these features.
+
+3. After building the three models—Logistic Regression, Decision Tree, and Random Forest and comparing them using evaluation metrics, it is evident that the Random Forest is the most suitable model for predicting proposal acceptance using features such as RomanticGestureScore, CompatibilityScore, and DistanceKM. The Random forest has better accuracy and AUC and good precision and F1-score compared to the other two models.
+
+4. While trying to increase the efficiency of Random Forest model used in the 3rd SMART question, we found that physical features, such as including features such as Height, Income, Age, and DistanceKM can produce an even more efficient model compared to the relational attributes used. However, by adding CompatibilityScore and RomanticGestureScore, significant improvements were observed with an increase in accuracy and a decrease in OOB error rate.
+
 
 # REFERENCES
 ```{r}
