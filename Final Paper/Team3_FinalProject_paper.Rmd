@@ -226,6 +226,7 @@ The P-value is greater than the significance level (0.05). Therefore, we cannot 
 #### OBSERVATION:
 
 The analysis begins with data cleaning and preprocessing, ensuring the dataset is free of missing or empty values, followed by factorization of categorical variables for analysis. **Exploratory Data Analysis (EDA)** reveals that the majority of individuals belong to the **Low-Income** group, with age and height showing normal distributions, while distance exhibits some outliers. A **Chi-Square Test** confirms that income has no significant impact on proposal acceptance (P-value > 0.05). For predicting proposal responses, **Random Forest**, **Logistic Regression**, and **Decision Tree** models were implemented, with **Random Forest** emerging as the best-performing model based on accuracy, precision, recall, and AUC scores. Feature importance analysis highlights **RomanticGestureScore**, **CompatibilityScore**, and **CommunicationScore** as the most influential predictors, while demographic features like income and age contribute less. The project successfully demonstrates the use of machine learning in uncovering patterns in proposal outcomes, with **Random Forest** proving to be a robust model for prediction.
+
 ```{r}
 ```
 
