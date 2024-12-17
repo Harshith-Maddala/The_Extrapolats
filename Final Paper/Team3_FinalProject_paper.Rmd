@@ -18,52 +18,38 @@ library(ezids)
 
 # ABSTRACT
 ```{r}
-PREDICTING THE PROPOSAL: A Data-Driven Approach to Love
-
-This project explores the intriguing concept of predicting the success of marriage proposals using a data-driven approach. By analyzing the Marriage Proposal Dataset, we aim to identify key factors influencing whether a proposal will be accepted or rejected. The dataset includes features such as age, height, income, romantic gesture scores, compatibility scores, communication scores, and distance between individuals.
-
-The analysis begins with comprehensive data cleaning and exploratory data analysis (EDA) to understand the distribution of variables and detect potential outliers. Descriptive statistics, visualizations, and contingency analysis are used to identify patterns and relationships within the data. Hypothesis testing, specifically the Chi-Square Test, is employed to examine the relationship between income levels and proposal responses.
-
-To build predictive models, we compare the performance of three machine learning classifiers: Logistic Regression, Decision Tree, and Random Forest. Evaluation metrics, including accuracy, precision, recall, F1-score, and AUC-ROC, demonstrate that the Random Forest model outperforms other models in predicting proposal acceptance. By incorporating features such as income, age, height, distance, romantic gestures, and compatibility scores, the model achieves high predictive accuracy. Further analysis is conducted to enhance the model's performance by identifying critical predictors using feature importance scores. Real-world predictions are demonstrated by inputting hypothetical data into the model, showcasing its practical application.This project highlights the potential of machine learning techniques to analyze interpersonal relationships and decision-making processes, providing valuable insights into the dynamics of love and proposal acceptance. The findings can be extended to similar domains, such as dating and matchmaking systems, for improved user experiences and decision support.
-
 ```
 
 # INTRODUCTION
 ```{r}
-In today's data-driven world, the use of analytics and machine learning has extended beyond traditional business and scientific domains into more personal and interpersonal aspects of human life. This project, "Predicting the Proposal: A Data-Driven Approach to Love," aims to explore the factors influencing the success or rejection of marriage proposals using statistical analysis and machine learning techniques. The study leverages a comprehensive dataset containing key variables such as age, income, height, romantic gesture scores, compatibility scores, communication scores, and distance between individuals. These features are analyzed to identify their relationships with the outcome of a proposal and to build predictive models that determine whether a marriage proposal will be accepted or rejected.
-
-The project begins with data preprocessing to ensure the quality and reliability of the analysis, followed by exploratory data analysis (EDA) to visualize and summarize key trends within the dataset. Hypothesis testing is used to examine the significance of certain features, such as income levels, in influencing proposal acceptance. The core of the project involves comparing the performance of Logistic Regression, Decision Tree, and Random Forest models to predict proposal outcomes. Through rigorous evaluation metrics like accuracy, precision, recall, F1-score, and AUC-ROC, the Random Forest model emerges as the most effective classifier. By analyzing feature importance, the study highlights the key predictors of a successful proposal, such as compatibility scores and romantic gestures.
-
-This research demonstrates how machine learning can provide unique insights into human behavior and relationships, offering potential applications in matchmaking, dating platforms, and decision support systems. Through a combination of statistical rigor and predictive modeling, this project bridges the gap between data science and the complex dynamics of human relationships, showcasing the transformative power of data-driven approaches in unconventional fields.
 ```
 
 # SUMMARY OF THE DATASET
-```{r}
-In our analysis of marriage proposals, a comprehensive dataset is used-one that provides a data-driven perspective on relationship dynamics and proposal outcomes. The set consists of 10,000 unique observations, each of which has been measured over 9 preselected variables indicative of both demographic information and relationship quality metrics. This data is particularly unique in that it contains no missing values and no outliers, thus rendering it perfect for robust statistical analysis.
+
+In our analysis of marriage proposals, a comprehensive dataset is used-one that provides a data-driven perspective on relationship dynamics and proposal outcomes. The set consists of 10,000 unique observations, each of which has been measured over 9 preselected variables indicative of both demographic information and relationship quality metrics. This data is particularly unique in that it contains no missing values and no outliers, thus rendering it perfect for robust statistical analysis. 
 
 The dataset bridges the gap between the quantifiable aspects of the relationships, such as income and physical distance, with the more nuanced elements that are the compatibility and communication scores. This dual approach gives a unique opportunity to understand how both tangible and intangible factors influence the success of marriage proposals in modern society.
 
-```
+This dataset was obtained from Kaggle and is based on the results of an online survey.
 
 # DATASET OVERVIEW
-```{r}
+
 The architecture of the variables in our dataset reflects the same thoughtfulness for the complexity of relationship dynamics. For data organization, there are mainly two categories: integer-type variables and categorical measurements. The integer-type variables include basic measures such as height in centimeters, age in years, income in USD, and the physical distance in kilometers between partners. These give concrete, measurable aspects of the relationship dynamic. 
 Complementing these numerical measures are five categorical variables, which capture the more subtle aspects of relationships. These include the RomanticGestureScore, CompatibilityScore, and CommunicationScore, each on a scale ranging from 0 to 10. The dataset also includes a binary Response variable indicating either proposal acceptance or rejection, with an AgeCategory classification that further segments the population into Young, Middle-aged, and Senior groups.
 Its completeness and consistency further point to the dataset being of exceptional quality, since there are no values missing, no duplicate rows, and the data type for each column is well defined. It provides a sound basis for statistical analysis and applications involving machine learning. Balanced distributions across categories provide assurance that the samples are representative of findings generalizable to reality.
 This dataset has a myriad of uses in relationship studies, ranging from the detailed analysis of factors that influence proposal success to the development of predictive models for proposal outcomes and demographic research in modern relationships. The comprehensiveness of the data, coupled with its quality, makes it invaluable for the understanding of the convolutions of marriage proposals in contemporary society.
 
-```
+
 
 ## Loading the Dataset 
-
-
-### Before Cleaning
-
 ```{r}
 # Reading the dataset
 proposal_df = read.csv("marriage_proposal.csv")
 ```
 
+### Before Cleaning
+
+**Structure of the Dataset**:
 ```{r}
 # Structure of the dataset
 str(proposal_df)
@@ -71,16 +57,17 @@ str(proposal_df)
 
 # DATA CLEANING
 
+**Empty Values in Each Column**
 ```{r}
-
 # Check for empty and NA values 
 empty_values <- sapply(proposal_df, function(x) sum(x == "", na.rm = TRUE))
 na_values <- sapply(proposal_df, function(x) sum(is.na(x)))
-print("Empty Values in Each Column:")
 print(empty_values)
-print("NA Values in Each Column:")
-print(na_values)
+```
 
+**NA Values in Each Column**
+```{r}
+print(na_values)
 ```
 
 ```{r}
@@ -98,14 +85,12 @@ proposal_df$Response <- as.factor(proposal_df$Response)
 ## Summary of the cleaned Dataset
 
 ```{r}
-
-print("Summary of cleaned data")
 summary(proposal_df)
-
 ```
 
 # EXPLORATORY DATA ANALYSIS
-### Loading necessary libraries
+
+Loading the necessary libraries for Graphs, Statistical Tests and Models.
 
 ```{r}
 # Load necessary libraries
@@ -136,45 +121,40 @@ Let’s take a look at descriptive stats of Numeric variables.
 describe(proposal_df %>% select(Age, Height, Income, DistanceKM))
 ```
 
-Graphical Representations of Integer variables.
+**Graphical Representations of Integer variables**
 
 ```{r}
 # Histogram of age
-
 ggplot(proposal_df, aes(x = Age, fill = Age)) + geom_histogram(binwidth = 5, fill = "lightpink", color = "black") + labs(title = "Age Distribution", x = "Age", y = "Frequency") + theme_minimal()
 ```
+Histogram of Variable Age.
 
 ```{r, warning=FALSE}
 # Frequency polygon for Height
-ggplot(proposal_df, aes(x = Height)) + 
-  geom_freqpoly(binwidth = 5, color = "grey", size = 1.2) + 
-  labs(title = "Height Distribution", x = "Height (cm)", y = "Frequency") + 
-  theme_minimal()
-
+ggplot(proposal_df, aes(x = Height)) + geom_freqpoly(binwidth = 5, color = "grey", size = 1.2) + labs(title = "Height Distribution", x = "Height (cm)", y = "Frequency") + theme_minimal()
 ```
+Frequency Polygon of Variable Height
 
-
-```{r}
-# We can use this function to check if any outliers were detected in variables.
-#proposal_df <- outlierKD2(proposal_df, DistanceKM, rm = TRUE, boxplt = TRUE, histogram = FALSE, qqplt = TRUE)
-```
 
 ```{r}
 ggplot(proposal_df, aes(x = cut(Income, breaks = c(5000, 20000, 30000, 40000, 50000), labels = c("Low Income", "Medium Income", "High Income", "Very High Income"), include.lowest = TRUE))) + geom_bar(fill = "steelblue", color = "black") + labs(title = "Population Distribution by Income Category", x = "Income Category", y = "Frequency") + theme_minimal()
 
 ```
+Bar chart of variable Income divided into Four categories (you'll see the categories later)
 
 ```{r}
 # Boxplot for Distance
 ggplot(proposal_df, aes(y = DistanceKM)) + geom_boxplot(fill = "lightyellow", color = "black") + labs(title = "Distance (KM) Boxplot", y = "Distance (KM)") + theme_minimal()
 ```
+Box plot of variable Distance
 
-Graphical Representations of Factorial variables.
+**Graphical Representations of Factorial variables**
 
 ```{r, warning=FALSE}
 # Pie chart for Response variable
 ggplot(proposal_df, aes(x = "", fill = Response)) + geom_bar(width = 1, stat = "count", color = "black") + coord_polar(theta = "y") + geom_text(aes(label = scales::percent(..count../sum(..count..))), position = position_stack(vjust = 0.5), stat = "count") + scale_fill_manual(values = c("0" = "red", "1" = "green"), labels = c("Rejected", "Accepted")) + labs(title = "Proposal Response Distribution", fill = "Response") + theme_void() + theme(plot.title = element_text(hjust = 0.5, size = 16))
 ```
+Pie chart for variable Response
 
 ```{r}
 # bar plot for Communication Score
@@ -185,45 +165,40 @@ p2 <- ggplot(proposal_df, aes(x = as.factor(CompatibilityScore))) + geom_bar(fil
 
 grid.arrange(p1, p2, ncol = 2)
 ```
+Bar plots for variables CommunicationScore and CompatibilityScore
+
 
 The exploratory analysis showed low correlations among individual attributes such as Income, Age, and DistanceKM concerning proposal acceptance. We observed a minor rise in acceptance rates among higher-income groups, yet anomalies in Income and DistanceKM indicate that refining or modifying the data may improve model effectiveness. The distribution of Age indicated that younger individuals, particularly those aged 25–35, are more represented, with minor declines in acceptance rates in older groups. Distance played a critical role, with shorter distances correlating positively with acceptance, though its influence diminished significantly beyond 50 KM. Overall, the dataset lacked strong linear relationships, indicating that advanced feature engineering and interaction terms may be necessary to capture underlying patterns.
 
 ### Outlier removal
+
+We have checked outliers for variables such as Height, Age, Income and DistanceKM, but we found out none of them have outliers.
 ```{r}
+# We can use this function to check if any outliers were detected in variables.
+#proposal_df <- outlierKD2(proposal_df, DistanceKM, rm = TRUE, boxplt = TRUE, histogram = FALSE, qqplt = TRUE)
 ```
 
 # SMART QUESTIONS
 ```{r}
 ```
 
-### Question 1:Is there a statistically significant difference in the Response variable (Proposal Accepted vs Rejected) based on the Income of the individual?
+### Question 1:
 ```{r}
-# Contingency table for Income Category and Proposal Response
-contingency_table <- table(cut(proposal_df$Income, 
-                               breaks = c(5000, 20000, 30000, 40000, 50000), 
-                               labels = c("Low Income", "Medium Income", "High Income", "Very High Income"), 
-                               include.lowest = TRUE), 
-                           proposal_df$Response)
-
-# Chi-Square Test
-chi_square_test <- chisq.test(contingency_table)
-chi_square_test
 ```
-The P-value is greater than the significance level (0.05). Therefore, we cannot reject the Null Hypothesis. There is no statistically significant difference in the Proposal Response based on an Individual's Income.
 
 #### OBSERVATION:
 ```{r}
-Identified the factors influencing proposal acceptance. Data cleaning and **exploratory analysis** revealed that while income showed no statistically significant impact on proposal response (P-value > 0.05), relational features like **RomanticGestureScore**, **CompatibilityScore**, and **CommunicationScore** played a crucial role. Among the models implemented—**Logistic Regression, Decision Tree, and Random Forest**—the **Random Forest model** performed best, achieving high accuracy, precision, recall, and AUC. Feature importance analysis further confirmed that interpersonal traits are stronger predictors of proposal acceptance than demographic variables like income. The results demonstrate the value of **machine learning** in uncovering patterns in human relationships and predicting real-world outcomes.
 ```
 
 #### RESULT:
 ```{r}
-The results of the analysis highlight that **income** is not a statistically significant factor in determining proposal acceptance, as confirmed by the **Chi-Square Test** (P-value > 0.05). Among the machine learning models implemented, the **Random Forest model** outperformed Logistic Regression and Decision Tree models, achieving the highest **accuracy, precision, recall, and AUC** scores. Feature importance analysis revealed that **RomanticGestureScore**, **CompatibilityScore**, and **CommunicationScore** are the most influential predictors of proposal acceptance. Incorporating additional features such as **Age**, **Income**, **Height**, and **DistanceKM** further enhanced the model's performance. The final **Random Forest model** demonstrates strong predictive capability, successfully capturing the key factors influencing proposal outcomes.
 ```
 
 ### Question 2: Can a linear regression model effectively predict the Income of an individual using Age, Height, and RomanticGestureScore as predictors?
 
-```{r}
+Let's build the **Linear Regression Model**.
+
+```{r,results='hide'}
 # linear regression model
 model_lr <- lm(Income ~ Age + Height + RomanticGestureScore, data = proposal_df)
 
@@ -251,9 +226,10 @@ par(mfrow = c(2, 2))
 plot(model_lr)
 ```
 
-We will now try to predict income of an individual who are 30 years old and 160 cm tall with a score of 8 for Romantic Gesture.
 
 #### RESULT:
+
+We will now try to predict income of an individual who are 30 years old and 160 cm tall with a score of 8 for Romantic Gesture.
 ```{r}
 # Sample input data 
 input1 <- data.frame(Age = 30, Height = 160, RomanticGestureScore = factor(8, levels = levels(proposal_df$RomanticGestureScore)))
@@ -270,7 +246,9 @@ The Linear Regression Model has predicted the income of such individual mentione
 The reason for selecting the three features, RomanticGestureScore, CompatibilityScore, and DistanceKM are due to their role on relational dynamics. RomanticGestureScore represents an individual’s capacity for expressing their affection physically. CompatibilityScore highlights the match of personality traits and key elements in determining the relation's success. DistanceKM on the other hand, represent the physical distance between the partners. Combined together, these features may provide a very valuble insights on the proposal's outcome. So, let's see if the emotional factors play a significant role in determining a relation's success.
 
 First, let's proceed with Logistic Regression Model first. 
-```{r, warning=FALSE}
+
+**Logistic Regression Model**
+```{r, warning=FALSE, results='hide'}
 # Split the dataset into training and testing sets 
 set.seed(123)  
 index <- createDataPartition(proposal_df$Response, p = 0.8, list = FALSE)
@@ -309,14 +287,16 @@ auc_text <- paste("AUC =", round(auc_value, 3)) # Add AUC value to the plot
 text(0.6, 0.2, auc_text, col = "blue", cex = 1.2)
 ```
 
-#### OBSERVATION:
+#### OBSERVATION 1:
 The Model uses 80% of the data for training, and the remaining 20% of the data for testing evaluation. The model predicts the outcome of the proposal with probabilities calculated for classification based the three features we have given. We will use few metrics to decide how well the model is performing.
 
 First, we got accuracy as 79.5%, precision as 83.4%, recall as 91.7%, and F1-score as 87.3%. While the balanced F1-score shows the overall reliability of the model, a high recall show the strong sensitivity to the accepted proposals. The AUC value is 81.5%, along with the ROC curve, certifies the model's efficiency.
 
 
 Now, let's proceed to the next model Decision tree:
-```{r, warning=FALSE}
+
+**Decision Tree Model**
+```{r, warning=FALSE, results='hide'}
 # Split the dataset into training and testing sets 
 set.seed(123)
 trainIndex <- createDataPartition(proposal_df$Response, p = 0.8, list = FALSE)
@@ -356,7 +336,8 @@ auc_text_tree <- paste("AUC =", round(auc_value_tree, 3)) # Add AUC value to the
 text(0.6, 0.2, auc_text_tree, col = "blue", cex = 1.2)
 
 ```
-#### OBSERVATION:
+
+#### OBSERVATION 2:
 
 In decision tree, we follow the similar approach as Logistic regression to divide the data for training and testing. But unlike Logistic regression, decision tree classifies responses and produces probabilities and classes for evaluation.
 
@@ -364,7 +345,9 @@ Overall, the Decision tree was little under performed compared to the logistic r
 
 
 Now, let's move on to the last model, Random Forest, Theoretically, this would be the best model out of all three of them. It combines multiple trees to reduce overfitting and leverages random feature selection and bagging, making it more accurate and robust. 
-```{r, warning=FALSE}
+
+**Random Forest Model**
+```{r, warning=FALSE, results='hide'}
 # Split the dataset into training and testing sets 
 set.seed(123)
 trainIndex <- createDataPartition(proposal_df$Response, p = 0.8, list = FALSE)
@@ -405,11 +388,9 @@ abline(a = 0, b = 1, col = "gray", lty = 2)
 auc_text_rf <- paste("AUC =", round(auc_value_rf, 3)) # Add AUC value to the plot
 text(0.6, 0.2, auc_text_rf, col = "blue", cex = 1.2)
 
-# Variable Importance Plot
-varImpPlot(random_forest_model, main = "Variable Importance - Random Forest")
-
 ```
-#### OBSERVATION:
+
+#### OBSERVATION 3:
 
 As expected, Random Forest out performed the remaining two models with an accuracy of 80.7%, precision of 84.1%, recall of 92.4% and 88% F1-score. It even has a high AUC score of 84.6% and the ROC curve being more curvy and closer to the left top side indicates how efficient the model is. These improvement using the random forest only implies the model's advantage in reducing the overfitting through learning and capturing complex relationships in the data. 
 
@@ -419,8 +400,8 @@ In comparing the three models Logistic Regression, Decision Tree, and Random For
 
 ### Question 4: How can we enhance the accuracy of a Random Forest model in predicting proposal acceptance using features like Income, Age, and DistanceKM? Adding what other features might further improve the model's performance, and how would the model's accuracy change as a result?
 
+```{r, results='hide'}
 # Split the dataset into training and testing sets 
-
 set.seed(123)
 trainIndex <- createDataPartition(proposal_df$Response, p = 0.8, list = FALSE)
 trainData <- proposal_df[trainIndex, ]
@@ -459,6 +440,8 @@ text(0.6, 0.2, auc_text_rf, col = "blue", cex = 1.2)
 
 ```
 
+Using the variables Age, Height, Income, DistanceKM have resulted in creating better model than the Random forest model in Third SMART Question. We will see if this is the highest possible accuracy or if this is the best model possible for this data to predict the outcome of a proposal.
+
 We consider all variables here to obtain the Mean Decrease Gini Scores of each variable
 
 ```{r}
@@ -471,10 +454,11 @@ importance(rf_model)
 varImpPlot(rf_model) # Plot
 
 ```
+We can see CompatibilityScore and CompatibilityScore are better than the variables Height, Age, Distance, and Income. So, we create a final Random Forest Model using all these variables.
 
-The Final Random Forest Model
+**The Final Random Forest Model**
 
-```{r}
+```{r, results='hide'}
 # Updated Model
 
 set.seed(123)
@@ -498,6 +482,9 @@ f1_score_rf <- 2 * (precision_rf * recall_rf) / (precision_rf + recall_rf)
 roc_curve_rf <- roc(actual, predicted_probabilities_rf, levels = c("0", "1"))
 auc_value_rf <- auc(roc_curve_rf)
 
+```
+
+```{r, results='hide'}
 # Print Metrics
 cat("Random Forest Metrics:\n")
 cat("Accuracy:", round(accuracy_rf, 3), "\n")
@@ -512,56 +499,44 @@ abline(a = 0, b = 1, col = "gray", lty = 2)
 auc_text_rf <- paste("AUC =", round(auc_value_rf, 3)) 
 text(0.6, 0.2, auc_text_rf, col = "blue", cex = 1.2)
 
-# Variable Importance Plot
-varImpPlot(random_forest_model, main = "Variable Importance - Random Forest")
-
 ```
 
-Let's consider an example and try to predict the Response for given values.
+Let's consider an example and try to predict the Response for given values. A person aged 23 years with 169 cm Height, earning $6000 yearly, stays apart 10 KM from his partner and has Romantic Gesture Score as 10.
 
 ```{r}
-
 # Prediction model
-subject <- data.frame(
-  RomanticGestureScore = factor(10, levels = levels(proposal_df$RomanticGestureScore)), CompatibilityScore = factor(7, levels = levels(proposal_df$CompatibilityScore)), DistanceKM = 10, Height = 169, Income = 6000, Age = 23)
+subject <- data.frame(RomanticGestureScore = factor(10, levels = levels(proposal_df$RomanticGestureScore)), CompatibilityScore = factor(7, levels = levels(proposal_df$CompatibilityScore)), DistanceKM = 10, Height = 169, Income = 6000, Age = 23)
 
 predicted_classes <- predict(random_forest_model, subject, type = "response")
 
 predicted_probabilities <- predict(random_forest_model, subject, type = "prob")
 
-cat("Predicted Class (0 or 1):\n")
 print(predicted_classes)
+```
 
 The Model Predicts the outcome to be 'Yes'(1).
 
 #### OBSERVATION:
-
-```{r}
-
 According to the study, adding more features to a Random Forest model can improve its ability to predict proposal acceptance. Initially, the model included factors such as Height, Income, Age, and DistanceKM, which led to an Out-Of-Bag (OOB) error rate of 24.1%. Key performance metrics, including an accuracy of 95.1%, precision of 94.4%, recall of 99.5%, and an AUC of 0.97, showcased the model's strong predictive capabilities. Nevertheless, the Mean Decrease Gini scores indicated that factors such as CompatibilityScore and RomanticGestureScore were significantly important and could enhance predictions further. 
 
+#### RESULT:
 Integrating CompatibilityScore and RomanticGestureScore into the model resulted in significant enhancements. The ultimate Random Forest model reached a reduced OOB error rate of 22.5% and improved performance metrics, with accuracy rising to 95.9%, precision at 95.9%, recall at 98.9%, and an AUC of 0.984. These results emphasize the significance of incorporating highly pertinent features into the model, which more accurately represent the nuances of proposal approval. The updated feature set highlights the significant influence of CompatibilityScore, underlining that interpersonal compatibility plays a crucial role in predictions, offering important insights for further model enhancements.
 
-```
 
-#### RESULT:
-```{r}
-```
 
 # CONCLUSION
 
-1. We have plotted a graph and observed the relation between acceptance and rejection ratio for individuals in different income categories. We have also conducted Pearson's Chi-squared test to see if there is any statistical difference in Response variable based on the individual's Income. We got a high p-value of 0.8 suggesting there is no significant association between Proposal and Income of an individual.
+1. We have plotted a graph and observed the relation between acceptance and rejection ratio for individuals in different income categories. We have also conducted Pearson's Chi-squared test to see if there is any statistical difference in Response variable based on the individual's Income. We got a high p-value of 0.8 suggesting there is no significant association between Proposal and Income of an individual.\n
 
-2. The linear regression model built using the features Age, Height, and RomanticGestureScore as predictors to determine the income of an individual has resulted in an effective model. This can be supported with the help of low R-squared value of 0.000851 and the high Mean Squared Error (MSE) of 1.7e+08. This means the chosen features do not explain much variation in income, and/or the model Linear regression is inefficient in making accurate predictions for this data or these features.
+2. The linear regression model built using the features Age, Height, and RomanticGestureScore as predictors to determine the income of an individual has resulted in an effective model. This can be supported with the help of low R-squared value of 0.000851 and the high Mean Squared Error (MSE) of 1.7e+08. This means the chosen features do not explain much variation in income, and/or the model Linear regression is inefficient in making accurate predictions for this data or these features.\n
 
-3. After building the three models—Logistic Regression, Decision Tree, and Random Forest and comparing them using evaluation metrics, it is evident that the Random Forest is the most suitable model for predicting proposal acceptance using features such as RomanticGestureScore, CompatibilityScore, and DistanceKM. The Random forest has better accuracy and AUC and good precision and F1-score compared to the other two models.
+3. After building the three models—Logistic Regression, Decision Tree, and Random Forest and comparing them using evaluation metrics, it is evident that the Random Forest is the most suitable model for predicting proposal acceptance using features such as RomanticGestureScore, CompatibilityScore, and DistanceKM. The Random forest has better accuracy and AUC and good precision and F1-score compared to the other two models.\n
 
-4. While trying to increase the efficiency of Random Forest model used in the 3rd SMART question, we found that physical features, such as including features such as Height, Income, Age, and DistanceKM can produce an even more efficient model compared to the relational attributes used. However, by adding CompatibilityScore and RomanticGestureScore, significant improvements were observed with an increase in accuracy and a decrease in OOB error rate.
+4. While trying to increase the efficiency of Random Forest model used in the 3rd SMART question, we found that physical features, such as including features such as Height, Income, Age, and DistanceKM can produce an even more efficient model compared to the relational attributes used. However, by adding CompatibilityScore and RomanticGestureScore, significant improvements were observed with an increase in accuracy and a decrease in OOB error rate.\n
 
 
 # REFERENCES
-```{r}
-```
 
-
-
+1. [How to implement Random Forests in R](https://www.r-bloggers.com/2018/01/how-to-implement-random-forests-in-r/) - Chaitanya Sagar, Prudhvi Potuganti and Saneesh Veetil.
+2. [Decision tree modeling using R](https://pmc.ncbi.nlm.nih.gov/articles/PMC4980381/) - Zhang Z.
+3. [W3 Schools](https://www.w3schools.com/r/r_graph_plot.asp)
